@@ -14,5 +14,5 @@ const checkForLogin = () => {
 checkForLogin();
 
 const logout = () => {
-    
+    localStorage.clear()
 }

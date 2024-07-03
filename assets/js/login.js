@@ -42,3 +42,33 @@ const submitLogin = async () => {
     console.log("error", msg);
   }
 };
+
+
+const addPatient = async () => { 
+  hideErrorBox();
+  const firstname = document.getElementById('firstname').value;
+  const lastname = document.getElementById('lastname').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const phonenumber = document.getElementById('number').value;
+  const gender = document.getElementById('gender').value;
+
+  const newUser = {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      phonenumber: phonenumber,
+      gender: gender
+  };
+  try {
+      const response = await axios.post(BASE_URL + '/api/patients', newUser)
+      console.log(response.data);
+      window.location.href = '/pages/hospital/login.html';
+  } catch (error) {
+    const msg = error.response.data.message;
+    errorBox.style.display = "block";
+    document.getElementById('error-msg').innerHTML = msg;
+    console.log("error", msg);
+  }
+}
