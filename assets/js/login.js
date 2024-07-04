@@ -2,8 +2,6 @@
 
 // const errorBox = document.getElementById("errorBox");
 
-
-
 // const hideErrorBox = () => {
 //     errorBox.style.display = "none";
 // }
@@ -114,14 +112,6 @@ const addDoctor = async () => {
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 
 const useremail = authUser.user.email; 
- 
-
-console.log("Email:", useremail);
-
-
-
-// console.log("Name:", username);
-
 
 document.getElementById('staffSidebar')
 const adminView = () => { 
