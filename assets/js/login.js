@@ -53,6 +53,8 @@ const addPatient = async () => {
   const phonenumber = document.getElementById('number').value;
   const gender = document.getElementById('gender').value;
 
+  console.log("Form values:", { firstname, lastname, email, password, phonenumber, gender });
+
   const newUser = {
       firstname: firstname,
       lastname: lastname,
