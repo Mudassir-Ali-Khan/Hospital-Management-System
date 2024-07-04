@@ -1,8 +1,7 @@
-// const constants = require('./constants');
+// const BASE_URL = require('../js/constants');
 
 // const errorBox = document.getElementById("errorBox");
 
-// app.use(constants);
 
 
 // const hideErrorBox = () => {
