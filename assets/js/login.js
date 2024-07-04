@@ -74,3 +74,16 @@ const addPatient = async () => {
     console.log("error", msg);
   }
 }
+
+userEmail = req.response.user.email;
+console.log(userEmail)
+
+const staffBar = document.getElementById('staffSidebar');
+
+const adminView = () => { 
+  staffBar.style.display = "none";  
+}
+
+if (!userEmail.includes('@admin.com')) {
+  adminView();
+}

@@ -189,7 +189,68 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <h1>Hello</h1>
+        <div class="d-flex justify-content-end">
+        <button class="btn bg-primary" type="button" data-toggle="modal" data-target="#add-new-user-modal">Add Doctor</button>
+      </div>
+
+      <div class="modal fade" id="add-new-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Doctor</h5>
+              <button type="button" class="close" onclick="hideErrorBox()" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <div class="form-group">
+                  <label for="">First Name</label>
+                  <input type="text" class="form-control" id="firstname">
+                </div>
+              <div class="form-group">
+                  <label for="">Last Name</label>
+                  <input type="text" class="form-control" id="lastname">
+                </div>
+      
+                <div class="form-group">
+                  <label for="">Email</label>
+                  <input type="email" class="form-control" id="email" autocomplete="off">
+                </div>
+                <div class="form-group">
+                  <label for="">Password</label>
+                  <input type="password" class="form-control" id="password"  autocomplete="new-password">
+                </div>
+                <div class="form-group">
+                  <label for="">PMC</label>
+                  <input type="number" class="form-control" id="PMC">
+                </div>
+                <div class="form-group">
+                  <label for="">Qualification</label>
+                  <input type="text" class="form-control" id="qualification">
+                </div>
+                <div class="form-group">
+                  <label for="">Phone Number</label>
+                  <input type="number" class="form-control" id="number">
+                </div>
+                <div class="form-group">
+                  <label for="">Gender</label>
+                  <select class="form-control" id="gender">
+                      <option value="">Select a gender...</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn" onclick="hideErrorBox()">Close</button>
+              <button type="button" class="btn btn-primary" id="addUserSubmitBtn" onclick="addUser()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Custom Code Here -->
         <!-- /.row -->
       </div><!--/. container-fluid -->
