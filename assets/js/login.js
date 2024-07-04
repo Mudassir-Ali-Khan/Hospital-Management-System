@@ -1,16 +1,18 @@
-const errorBox = document.getElementById("errorBox");
+// const constants = require('./constants');
+
+// const errorBox = document.getElementById("errorBox");
+
+// app.use(constants);
 
 
-console.log("Base url", BASE_URL);
+// const hideErrorBox = () => {
+//     errorBox.style.display = "none";
+// }
 
-const hideErrorBox = () => {
-    errorBox.style.display = "none";
-}
-
-hideErrorBox();
+// hideErrorBox();
 
 const submitLogin = async () => {
-  hideErrorBox();
+  // hideErrorBox();
   const email = document.getElementById("userEmail").value;
   const password = document.getElementById("userPassword").value;
   try {
@@ -19,7 +21,7 @@ const submitLogin = async () => {
     //   password: userPassword,
     // });
 
-    const response = await axios.post(BASE_URL + "/api/auth/login", {
+    const response = await axios.post("http://localhost:5000/api/auth/login", {
         email,
         password,
     });
@@ -37,7 +39,7 @@ const submitLogin = async () => {
     window.location.href = '/index.html'
   } catch (error) {
     const msg = error.response.data.message;
-    errorBox.style.display = "block";
+    // errorBox.style.display = "block";
     document.getElementById('error-msg').innerHTML = msg;
     console.log("error", msg);
   }
@@ -45,7 +47,7 @@ const submitLogin = async () => {
 
 
 const addPatient = async () => { 
-  hideErrorBox();
+  // hideErrorBox();
   const firstname = document.getElementById('firstname').value;
   const lastname = document.getElementById('lastname').value;
   const email = document.getElementById('email').value;
@@ -64,26 +66,82 @@ const addPatient = async () => {
       gender: gender
   };
   try {
-      const response = await axios.post(BASE_URL + '/api/patients', newUser)
+      const response = await axios.post('http://localhost:5000/api/patients', newUser)
       console.log(response.data);
       window.location.href = '/pages/hospital/login.html';
   } catch (error) {
     const msg = error.response.data.message;
-    errorBox.style.display = "block";
+    // errorBox.style.display = "block";
     document.getElementById('error-msg').innerHTML = msg;
     console.log("error", msg);
   }
 }
 
-userEmail = req.response.user.email;
-console.log(userEmail)
+const addDoctor = async () => { 
 
-const staffBar = document.getElementById('staffSidebar');
+  const firstname = document.getElementById('doctorfirstname').value;
+  const lastname = document.getElementById('doctorlastname').value;
+  const email = document.getElementById('doctoremail').value;
+  const password = document.getElementById('doctorpassword').value;
+  const PMC = document.getElementById('doctorPMC').value;
+  const qualification = document.getElementById('doctorqualification').value;
+  const phonenumber = document.getElementById('doctornumber').value;
+  const gender = document.getElementById('doctorgender').value;
 
-const adminView = () => { 
-  staffBar.style.display = "none";  
+
+  const newDoctor = {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      PMC: PMC,
+      qualification: qualification,
+      phonenumber: phonenumber,
+      gender: gender
+  };
+  try {
+      const response = await axios.post('http://localhost:5000/api/doctors', newDoctor)
+      console.log(response.data);
+      window.location.href = '/pages/hospital/login.html';
+  } catch (error) {
+    const msg = error.response.data.message;
+    // errorBox.style.display = "block";
+    document.getElementById('error-msg').innerHTML = msg;
+    console.log("error", msg);
+  }
 }
 
-if (!userEmail.includes('@admin.com')) {
+
+const authUser = JSON.parse(localStorage.getItem('authUser'));
+
+const useremail = authUser.user.email; 
+ 
+
+console.log("Email:", useremail);
+
+
+
+// console.log("Name:", username);
+
+
+document.getElementById('staffSidebar')
+const adminView = () => { 
+  staffSidebar.style.display = "none";  
+}
+
+if (!useremail.includes('@admin.com')) {
   adminView();
+}
+
+const adminName = authUser.user.fullname;
+
+
+if (useremail.includes('admin.com')) {
+  document.getElementById('userName').innerHTML = adminName;
+}
+else {
+const userFirstName = authUser.user.firstname;
+const userLastName = authUser.user.lastname;
+
+document.getElementById('userName').innerHTML = userFirstName + userLastName;
 }

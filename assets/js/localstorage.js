@@ -1,3 +1,0 @@
-const logout = () => { 
-    localStorage.clear()
-}
