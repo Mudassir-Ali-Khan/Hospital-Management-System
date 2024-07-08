@@ -107,32 +107,3 @@ const addDoctor = async () => {
     console.log("error", msg);
   }
 }
-
-
-
-const authUser = JSON.parse(localStorage.getItem('authUser'));
-
-const useremail = authUser.user.email; 
-
-document.getElementById('staffSidebar')
-const adminView = () => { 
-  staffSidebar.style.display = "none";  
-}
-
-if (!useremail.includes('@admin.com')) {
-  adminView();
-}
-
-const adminName = authUser.user.fullname;
-
-
-if (useremail.includes('admin.com')) {
-  document.getElementById('userName').innerHTML = adminName;
-}
-else {
-const userFirstName = authUser.user.firstname;
-const userLastName = authUser.user.lastname;
-
-document.getElementById('userName').innerHTML = userFirstName + userLastName;
-}
-
