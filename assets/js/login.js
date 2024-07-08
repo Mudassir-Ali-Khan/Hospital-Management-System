@@ -1,15 +1,15 @@
 // const BASE_URL = require('../js/constants');
 
-// const errorBox = document.getElementById("errorBox");
+const errorBox = document.getElementById("errorBox");
 
-// const hideErrorBox = () => {
-//     errorBox.style.display = "none";
-// }
+const hideErrorBox = () => {
+    errorBox.style.display = "none";
+}
 
-// hideErrorBox();
+hideErrorBox();
 
 const submitLogin = async () => {
-  // hideErrorBox();
+  hideErrorBox();
   const email = document.getElementById("userEmail").value;
   const password = document.getElementById("userPassword").value;
   try {
@@ -18,7 +18,7 @@ const submitLogin = async () => {
     //   password: userPassword,
     // });
 
-    const response = await axios.post("http://localhost:5000/api/auth/login", {
+    const response = await axios.post(BASE_URL + "/api/auth/login", {
         email,
         password,
     });
@@ -36,7 +36,7 @@ const submitLogin = async () => {
     window.location.href = '/index.html'
   } catch (error) {
     const msg = error.response.data.message;
-    // errorBox.style.display = "block";
+    errorBox.style.display = "block";
     document.getElementById('error-msg').innerHTML = msg;
     console.log("error", msg);
   }

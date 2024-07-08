@@ -1,0 +1,23 @@
+.data-table-custom {
+    height: 50rem;
+}
+
+.dark-mode .nav-tabs .nav-item.show .nav-link, .dark-mode .nav-tabs .nav-link.active {
+    background-color: #3f6791 !important;
+}
+
+.custom-tab, .custom-tab-inactive {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    margin: 0px !important;
+    margin-right: -3px !important;
+}
+
+.custom-tab-inactive {
+    background-color: transparent !important;
+    border: none;
+}
+
+.custom-tab-inactive:hover {
+    border: 1px solid gray !important;
+}
