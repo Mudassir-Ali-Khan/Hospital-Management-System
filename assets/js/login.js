@@ -109,6 +109,7 @@ const addDoctor = async () => {
 }
 
 
+
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 
 const useremail = authUser.user.email; 
@@ -134,3 +135,4 @@ const userLastName = authUser.user.lastname;
 
 document.getElementById('userName').innerHTML = userFirstName + userLastName;
 }
+
