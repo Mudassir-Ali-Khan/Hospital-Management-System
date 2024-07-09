@@ -5,7 +5,7 @@ const loadProfile = () => {
     if (user.user.isAdmin === true) {
         fullName = user.user.fullname;
     } else {
-        fullName = user.user.firstName + ' ' + user.user.lastName;
+        fullName = user.user.firstname + ' ' + user.user.lastname;
     }
 
     const infoDiv = document.getElementsByClassName('info')[0];
