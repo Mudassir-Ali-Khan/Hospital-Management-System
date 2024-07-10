@@ -21,3 +21,52 @@
 .custom-tab-inactive:hover {
     border: 1px solid gray !important;
 }
+
+.custom-tab-inactive {
+    color: black;
+}
+
+.dark-mode .custom-tab {
+    color: white !important;
+}
+
+.dark-mode .page-link {
+    color: white !important;
+}
+
+.page-link {
+    color: black;
+}
+
+.custom-dropdown {
+    width: 20rem !important;
+    margin-left: -12rem;
+    position: absolute;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: none;
+}
+
+.dark-mode .custom-dropdown {
+    background-color: #2b333a;
+}
+
+.showDropdown {
+    display: block;
+}
+
+.search-icon {
+    position: absolute !important;
+    top: 55px;
+    margin-left: 10px;
+}
+
+.filter-buttons {
+    display: flex; 
+    flex-direction: column !important; 
+    align-items: self-start;
+}
+
+.dark-mode .filter-buttons button {
+    color: white !important;
+}
