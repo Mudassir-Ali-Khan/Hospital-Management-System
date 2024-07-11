@@ -14,6 +14,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <link rel="stylesheet" href="../../dist/css/data-table.css">
+  <link rel="stylesheet" href="../../dist/css/toggle-button.css">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -66,6 +67,15 @@
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
+      </li>
+      <li class="nav-item">
+        <!-- <input type="checkbox" onchange="themCheckboxMethod()" checked> -->
+        <label class="ui-switch mt-2" >
+          <input type="checkbox" id="theme-toggle" onchange="themCheckboxMethod()" checked>
+          <div class="slider">
+            <div class="circle"></div>
+          </div>
+        </label>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
@@ -188,169 +198,177 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <div id="dataTable">
+    <div>
       <section class="content">
         <div class="container-fluid">
           <!-- Row -->
-          <div class="card data-table-custom p-3">
-            <!-- upper div -->
-            <div class="d-flex justify-content-between border-bottom">
-              <!-- this is left tab div -->
-              <div>
-                <button class="btn btn-primary custom-tab">All</button>
-                <button class="btn btn-primary custom-tab-inactive">All</button>
-                <button class="btn btn-primary custom-tab-inactive">All</button>
-                <button class="btn btn-primary custom-tab-inactive">All</button>
+          <!-- style="background-color: #343A3F" -->
+           <div id="dataTable" >
+             <div class="card data-table-custom p-3" id="tabledata">
+               <!-- upper div -->
+               <div class="d-flex justify-content-between border-bottom">
+                 <!-- this is left tab div -->
+                 <div>
+                   <button class="btn btn-primary custom-tab">All</button>
+                   <button class="btn btn-primary custom-tab-inactive">All</button>
+                   <button class="btn btn-primary custom-tab-inactive">All</button>
+                   <button class="btn btn-primary custom-tab-inactive">All</button>
+       
+                 </div>
+       
+                 <!-- This is right filter div -->
+                 <div class="dropdown show">
+                   <button class="btn btn-primary" id="filterByDropdown" data-toggle="dropdown" aria-haspopup="true"
+                     aria-expanded="false">Filter By <i class="fa fa-arrow-down mx-1" style="font-size: 13px;"
+                       aria-hidden="true"></i> </button>
+                   <div class="custom-dropdown rounded mt-1" id="custom-dropdown" aria-labelledby="filterByDropdown">
+                     <div class="p-3">
+                       <h6>Filter By</h6>
+                       <div>
+                         <input type="text" placeholder="Search" class="form-control" style="padding-left: 35px;">
+                         <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                       </div>
+                       <div class="d-flex justify-content-between align-items-center mt-3">
+                         <span>Date</span>
+                         <i class="fa fa-arrow-down cursor-pointer" data-toggle="collapse" href="#collapseExample"
+                           role="button" aria-expanded="false" aria-controls="collapseExample"></i>
+                       </div>
+                       <div class="collapse" id="collapseExample">
+                         <div class="filter-buttons">
+                           <button class="btn">Year to Date</button>
+                           <button class="btn">Month to Date</button>
+                           <button class="btn">Last 90 Days</button>
+                           <button class="btn">Last 60 Days</button>
+                           <button class="btn">Last 30 Days</button>
+                           <button class="btn">Select Custom Range</button>
+                         </div>
+                       </div>
+                       <div class="mt-3">
+                         <button class="btn btn-block btn-primary">Apply</button>
+                         <button class="btn btn-block btn-secondary">Remove All</button>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+       
+               <!-- Middle div (download, fullscreen, density, column management) -->
+               <div class="d-flex justify-content-end align-items-center my-4">
+                 <i class="fa fa-columns cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                   title="Hide/Show Column"></i>
+                 <i class="fa fa-align-justify mx-3 cursor-pointer" aria-hidden="true" data-toggle="tooltip"
+                   data-placement="top" title="Density"></i>
+                 <i class="fa fa-arrows-alt cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                   title="Full Screen" onclick="toggleFullscreen()"></i>
+       
+                 <i class="fa fa-download mx-3 bg-primary p-2 rounded cursor-pointer" aria-hidden="true" data-toggle="tooltip"
+                   data-placement="top" title="Download"></i>
+               </div>
+       
+               <!-- Main Table -->
+               <div class="table-responsive">
+                 <table class="table table-striped">
+                   <thead class="bg-secondary">
+                     <tr>
+                       <th>Name</th>
+                       <th>Email</th>
+                       <th>Address</th>
+                       <th>Ph Number</th>
+                       <th>Status</th>
+                       <th>Action</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr>
+                      <!-- class="py-4" -->
+                       <td>Rayyan</td>
+                       <td>rayyan@gmail.com</td>
+                       <td >Islamabad</td>
+                       <td >123123</td>
+                       <td ><span class="badge bg-success">Active</span></td>
+                       <td>
+                         <div class="dropdown">
+                           <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
+                             aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
+                           <div class="dropdown-menu">
+                             <a class="dropdown-item" href="#">Action</a>
+                             <a class="dropdown-item" href="#">Another action</a>
+                             <a class="dropdown-item" href="#">Something else here</a>
+                           </div>
+                         </div>
+                       </td>
+                     </tr>
+                     <tr>
+                       <td>Rayyan</td>
+                       <td>rayyan@gmail.com</td>
+                       <td>Islamabad</td>
+                       <td>123123</td>
+                       <td><span class="badge bg-success">Active</span></td>
+                       <td>
+                         <div class="dropdown">
+                           <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
+                             aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
+                           <div class="dropdown-menu">
+                             <a class="dropdown-item" href="#">Action</a>
+                             <a class="dropdown-item" href="#">Another action</a>
+                             <a class="dropdown-item" href="#">Something else here</a>
+                           </div>
+                         </div>
+                       </td>
+                     </tr>
+                     <tr>
+                       <td>Rayyan</td>
+                       <td>rayyan@gmail.com</td>
+                       <td>Islamabad</td>
+                       <td>123123</td>
+                       <td><span class="badge bg-danger">Block</span></td>
+                       <td>
+                         <div class="dropdown">
+                           <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
+                             aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
+                           <div class="dropdown-menu">
+                             <a class="dropdown-item" href="#">Action</a>
+                             <a class="dropdown-item" href="#">Another action</a>
+                             <a class="dropdown-item" href="#">Something else here</a>
+                           </div>
+                         </div>
+                       </td>
+                     </tr>
+                   </tbody>
+       
+                 </table>
+               </div>
+       
+             </div>
+             <div class="row">
+               <div class="col-md-2 ">
+                 <p class="text-center">Showing 1 of 10 out of 98</p>
+               </div>
+               <div class="col-md-8 d-flex justify-content-center">
+                 <nav aria-label="Page navigation example">
+                   <ul class="pagination">
+                     <li class="page-item">
+                       <a class="page-link" href="#" aria-label="Previous">
+                         <span aria-hidden="true">&laquo;</span>
+                       </a>
+                     </li>
+                     <li class="page-item"><a class="page-link" href="#">1</a></li>
+                     <li class="page-item"><a class="page-link" href="#">2</a></li>
+                     <li class="page-item"><a class="page-link" href="#">3</a></li>
+                     <li class="page-item">
+                       <a class="page-link" href="#" aria-label="Next">
+                         <span aria-hidden="true">&raquo;</span>
+                       </a>
+                     </li>
+                   </ul>
+                 </nav>
+               </div>
+               <div class="col-md-2">
+                 <div></div>
+               </div>
+             </div>
+           </div>
     
-              </div>
-    
-              <!-- This is right filter div -->
-              <div class="dropdown show">
-                <button class="btn btn-primary" id="filterByDropdown" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">Filter By <i class="fa fa-arrow-down mx-1" style="font-size: 13px;"
-                    aria-hidden="true"></i> </button>
-                <div class="custom-dropdown rounded mt-1" id="custom-dropdown" aria-labelledby="filterByDropdown">
-                  <div class="p-3">
-                    <h6>Filter By</h6>
-                    <div>
-                      <input type="text" placeholder="Search" class="form-control" style="padding-left: 35px;">
-                      <i class="fa fa-search search-icon" aria-hidden="true"></i>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <span>Date</span>
-                      <i class="fa fa-arrow-down cursor-pointer" data-toggle="collapse" href="#collapseExample"
-                        role="button" aria-expanded="false" aria-controls="collapseExample"></i>
-                    </div>
-                    <div class="collapse" id="collapseExample">
-                      <div class="filter-buttons">
-                        <button class="btn">Year to Date</button>
-                        <button class="btn">Month to Date</button>
-                        <button class="btn">Last 90 Days</button>
-                        <button class="btn">Last 60 Days</button>
-                        <button class="btn">Last 30 Days</button>
-                        <button class="btn">Select Custom Range</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <!-- Middle div (download, fullscreen, density, column management) -->
-            <div class="d-flex justify-content-end align-items-center my-4">
-              <i class="fa fa-columns cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top"
-                title="Hide/Show Column"></i>
-              <i class="fa fa-align-justify mx-3 cursor-pointer" aria-hidden="true" data-toggle="tooltip"
-                data-placement="top" title="Density"></i>
-              <i class="fa fa-arrows-alt cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top"
-                title="Full Screen" onclick="toggleFullscreen()"></i>
-    
-              <i class="fa fa-download mx-3 bg-primary p-2 rounded cursor-pointer" aria-hidden="true" data-toggle="tooltip"
-                data-placement="top" title="Download"></i>
-            </div>
-    
-            <!-- Main Table -->
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead class="bg-secondary">
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Ph Number</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Rayyan</td>
-                    <td>rayyan@gmail.com</td>
-                    <td>Islamabad</td>
-                    <td>123123</td>
-                    <td><span class="badge bg-success">Active</span></td>
-                    <td>
-                      <div class="dropdown">
-                        <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
-                          aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Rayyan</td>
-                    <td>rayyan@gmail.com</td>
-                    <td>Islamabad</td>
-                    <td>123123</td>
-                    <td><span class="badge bg-success">Active</span></td>
-                    <td>
-                      <div class="dropdown">
-                        <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
-                          aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Rayyan</td>
-                    <td>rayyan@gmail.com</td>
-                    <td>Islamabad</td>
-                    <td>123123</td>
-                    <td><span class="badge bg-danger">Block</span></td>
-                    <td>
-                      <div class="dropdown">
-                        <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
-                          aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-    
-              </table>
-            </div>
-    
-          </div>
-    
-          <div class="row">
-            <div class="col-md-2 ">
-              <p class="text-center">Showing 1 of 10 out of 98</p>
-            </div>
-            <div class="col-md-8 d-flex justify-content-center">
-              <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <div class="col-md-2">
-              <div></div>
-            </div>
-          </div>
           <!-- Custom Code Here -->
           <!-- /.row -->
         </div><!--/. container-fluid -->
@@ -395,5 +413,6 @@
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/auth.js"></script>
 <script src="/assets/js/data-table.js"></script>
+<script src="/assets/js/common.js"></script>
 </body>
 </html>
