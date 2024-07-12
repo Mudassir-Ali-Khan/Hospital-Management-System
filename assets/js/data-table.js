@@ -17,26 +17,26 @@ const toggleFullscreen = () => {
     }
 }
 
-let density = 'py-3';
+let density = 'py-2';
 
 const handleDensity = () => {
     switch(density) {
-        case 'py-3':
-            density = 'py-2';
-            break;
         case 'py-2':
+            density = 'py-3';
+            break;
+        case 'py-3':
             density = 'py-4';
             break;
         case 'py-4':
             density = 'py-5';
             break;
         case 'py-5':
-            density = 'py-3';
+            density = 'py-2';
             break;
     }
 
     // The code to add density in all "td"
-    const tds = document.querySelectorAll('td'); // look td which exists in datatable
+    const tds = document.querySelectorAll('#dataTable td'); // look td which exists in datatable
     tds.forEach(td => td.classList.remove('py-3', 'py-2', 'py-4', 'py-5'));
     tds.forEach(td => td.classList.add(density));
 }
