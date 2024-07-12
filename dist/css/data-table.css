@@ -2,6 +2,11 @@
     height: 50rem;
 }
 
+.data-table-custom td {
+    /* slowness */
+    transition:  0.3s
+}
+
 .dark-mode .nav-tabs .nav-item.show .nav-link, .dark-mode .nav-tabs .nav-link.active {
     background-color: #3f6791 !important;
 }
@@ -14,8 +19,13 @@
 }
 
 .custom-tab-inactive {
+    color: black !important;
     background-color: transparent !important;
     border: none;
+}
+
+.dark-mode .custom-tab-inactive {
+    color: white !important;
 }
 
 .custom-tab-inactive:hover {
