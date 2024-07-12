@@ -25,6 +25,9 @@ const handleTableTabChange = (e) => {
 };
 
 const getPatients = () => {
+    if (currentTab === 'All') {
+        // Call API of patient here using axios, use the proper BASE_URL variable to access the base url of server. ref login.js
+    }
 }
 
 document.getElementById('table-tab-box').addEventListener('click', (e) => {
