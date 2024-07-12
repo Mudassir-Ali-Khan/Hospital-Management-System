@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/toggle-button.css">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -40,6 +41,15 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
+      <li class="nav-item">
+        <!-- <input type="checkbox" onchange="themCheckboxMethod()" checked> -->
+        <label class="ui-switch mt-2" >
+          <input type="checkbox" id="theme-toggle" onchange="themCheckboxMethod()" checked>
+          <div class="slider">
+            <div class="circle"></div>
+          </div>
+        </label>
+      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
@@ -70,11 +80,8 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+
+      
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -879,5 +886,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/assets/js/auth.js"></script>
 <script src="/assets/js/constants.js"></script>
 <script src="/assets/js/profile.js"></script>
+<script src="/assets/js/common.js"></script>
 </body>
 </html>
