@@ -81,3 +81,32 @@
 .dark-mode .filter-buttons button {
     color: white !important;
 }
+
+.filter-tab, .filter-tab-inactive {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    margin: 0px !important;
+    margin-right: -3px !important;
+}
+
+.filter-tab-inactive {
+    color: black !important;
+    background-color: transparent !important;
+    border: none;
+}
+
+.dark-mode .filter-tab-inactive {
+    color: white !important;
+}
+
+.filter-tab-inactive:hover {
+    border: 1px solid gray !important;
+}
+
+.filter-tab-inactive {
+    color: black;
+}
+
+.dark-mode .filter-tab {
+    color: white !important;
+}

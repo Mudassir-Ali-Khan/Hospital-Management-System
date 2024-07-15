@@ -24,6 +24,29 @@ const handleTableTabChange = (e) => {
     getPatients();
 };
 
+
+const FILTERTABS = ["Year to Date", "Month to Date", "Last 90 Days", "Last 60 Days", "Last 30 Days", "Select Custom Range"];
+let selectedTab = "Year to Date";
+
+
+const handleFilterTabChange = (e) => {
+    const clickedTab = e.srcElement.innerText;
+    selectedTab = clickedTab;
+    const tabIndex = FILTERTABS.indexOf(clickedTab);
+
+    const filterTabs = document.getElementsByClassName('filter-table-tab');
+    for (let i = 0; i < filterTabs.length; i++) {
+        if (i === tabIndex) {
+            filterTabs[i].classList.remove('filter-tab-inactive');
+            filterTabs[i].classList.add('filter-tab');
+        } else {
+            filterTabs[i].classList.add('filter-tab-inactive');
+            filterTabs[i].classList.remove('filter-tab');
+        }
+    }
+};
+
+
 const getPatients = () => {
     if (currentTab === 'All') {
         // Call API of patient here using axios, use the proper BASE_URL variable to access the base url of server. ref login.js
@@ -32,4 +55,7 @@ const getPatients = () => {
 
 document.getElementById('table-tab-box').addEventListener('click', (e) => {
     handleTableTabChange(e);
+})
+document.getElementById('filter-tab-box').addEventListener('click', (e) => {
+    handleFilterTabChange(e);
 })

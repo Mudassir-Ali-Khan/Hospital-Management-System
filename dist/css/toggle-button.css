@@ -84,3 +84,78 @@
     width: 0;
     height: 0;
   }
+
+  .toggle-button {
+    position: relative;
+    display: inline-block;
+    width: 30px;  /* Adjusted width */
+    height: 16px; /* Adjusted height */
+    margin-right: 8px; /* Added margin to the right of the toggle button */
+  }
+  
+  .toggle-button input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-button .knob {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #888888;
+    transition: .2s;
+    border-radius: 16px; /* Adjusted to match the height */
+  }
+  
+  .toggle-button .knob:before {
+    position: absolute;
+    content: '';
+    height: 12px; /* Adjusted to fit within the toggle */
+    width: 12px;  /* Adjusted to fit within the toggle */
+    left: 2px;    /* Adjusted to center the knob */
+    bottom: 2px;  /* Adjusted to center the knob */
+    transition: .2s;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .toggle-button input:checked + .knob {
+    background-color: #76b176;
+  }
+  
+  .toggle-button input:focus + .knob {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  .toggle-button input:checked + .knob:before {
+    -webkit-transform: translateX(14px);  /* Adjusted to move the knob */
+    -ms-transform: translateX(14px); /* Adjusted to move the knob */
+    transform: translateX(14px); /* Adjusted to move the knob */
+  }
+  
+  .toggle-text {
+    margin-left: 8px; /* Added margin to the left of the toggle text */
+  }
+  
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-dropdown-menu {
+    right: auto;
+    left: -25px;
+  }
+
+  .custom-dropdown-download-menu {
+    left: -100px;
+  }
+  
+  
