@@ -1,3 +1,5 @@
+
+
 const TABS = ["All", "Inactive", "Active"];
 let currentTab = "All";
 
@@ -47,9 +49,10 @@ const handleFilterTabChange = (e) => {
 };
 
 
-const getPatients = () => {
+const getPatients = async () => {
     if (currentTab === 'All') {
-        // Call API of patient here using axios, use the proper BASE_URL variable to access the base url of server. ref login.js
+        const response = await axios.get('http://localhost:5000/api/patients')
+        console.log(response.data);
     }
 }
 
