@@ -247,7 +247,7 @@
                </div>
        
                <!-- Middle div (download, fullscreen, density, column management) -->
-               <div class="d-flex justify-content-end align-items-center">
+               <div class="d-flex justify-content-end align-items-center my-3">
                 <div class="dropdown">
                   <i class="fa fa-columns cursor-pointer" aria-hidden="true" data-toggle="dropdown"
                     aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Hide/Show Column"></i>
@@ -402,24 +402,11 @@
              </div>
              <div class="row">
                <div class="col-md-2 ">
-                 <p class="text-center">Showing 1 of 10 out of 98</p>
+                 <p class="text-center" id="page-result">Showing 1 of 10 out of 98</p>
                </div>
                <div class="col-md-8 d-flex justify-content-center">
                  <nav aria-label="Page navigation example">
-                   <ul class="pagination">
-                     <li class="page-item">
-                       <a class="page-link" href="#" aria-label="Previous">
-                         <span aria-hidden="true">&laquo;</span>
-                       </a>
-                     </li>
-                     <li class="page-item"><a class="page-link" href="#">1</a></li>
-                     <li class="page-item"><a class="page-link" href="#">2</a></li>
-                     <li class="page-item"><a class="page-link" href="#">3</a></li>
-                     <li class="page-item">
-                       <a class="page-link" href="#" aria-label="Next">
-                         <span aria-hidden="true">&raquo;</span>
-                       </a>
-                     </li>
+                   <ul class="pagination" id="pages">
                    </ul>
                  </nav>
                </div>
@@ -459,6 +446,7 @@
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
+<script src="/assets/js/constants.js"></script>
 <script src="../../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
 <script src="../../plugins/raphael/raphael.min.js"></script>
 <script src="../../plugins/jquery-mapael/jquery.mapael.min.js"></script>
