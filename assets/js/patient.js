@@ -23,7 +23,7 @@ const renderPages = (disableBtn = '') => {
     pagesDiv.innerHTML = "";
 
     pagesDiv.innerHTML = `<li class="page-item">
-                       <span class="page-link cursor-pointer" aria-label="Previous">
+                       <span class="page-link ${disableBtn === 'next' ? 'bg-secondary' : 'cursor-pointer'}" ${disableBtn === 'next' ? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
                          <span aria-hidden="true">&laquo;</span>
                        </span>
                 </li> `;
@@ -60,7 +60,10 @@ const nextPage = () => {
 }
 
 const previousPage = () => {
-    
+    end = start - 1;
+    start = start - 5;
+    currentPage = end;
+    renderPages(buttonToDisable())
 }
 
 const buttonToDisable = () => {
