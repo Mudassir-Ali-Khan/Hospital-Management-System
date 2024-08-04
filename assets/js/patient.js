@@ -10,6 +10,12 @@ console.log("Total Pages", totalPages)
 let start = 1;
 let end = 5;
 
+let filter = {
+    startDate: '',
+    endDate: '',
+    search: '',
+}
+
 const getPatients = async () => {
     if (currentTab === 'All') {
         const response = await axios.get(BASE_URL + '/api/patients')
@@ -23,14 +29,14 @@ const renderPages = (disableBtn = '') => {
     pagesDiv.innerHTML = "";
 
     pagesDiv.innerHTML = `<li class="page-item">
-                       <span class="page-link ${disableBtn === 'previous' ? 'bg-secondary' : 'cursor-pointer'}" ${disableBtn === 'previous' ? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
+                       <button class="page-link ${disableBtn === 'previous' ? 'bg-secondary' : 'cursor-pointer'}" ${disableBtn === 'previous' ? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
                          <span aria-hidden="true">&laquo;</span>
-                       </span>
+                       </button>
                 </li> `;
 
     for (let i = start; i <= end; i++) {
         pagesDiv.innerHTML += `
-             <li class="page-item"><span onclick="changePage(${i})" class="page-link cursor-pointer ${currentPage === i ? 'bg-primary' : ''}"> ${i} </span></li>
+             <li style="width: 50px;" class="page-item"><span onclick="changePage(${i})" class="page-link cursor-pointer text-center ${currentPage === i ? 'bg-primary' : ''}"> ${i} </span></li>
         `;
     }
 
@@ -45,7 +51,11 @@ const renderPages = (disableBtn = '') => {
 const updatePageResult = () => {
     const pageResult = document.getElementById('page-result');
     const pageRecord = currentPage * 10;
-    pageResult.innerHTML = `Showing ${pageRecord - 9} of ${pageRecord} out of ${totalRecords}`
+    if (currentPage === totalPages) {
+        pageResult.innerHTML = `Showing ${pageRecord - 9} of ${totalRecords} out of ${totalRecords}`;
+    } else {
+        pageResult.innerHTML = `Showing ${pageRecord - 9} of ${pageRecord} out of ${totalRecords}`;
+    }
 }
 
 const nextPage = () => {
@@ -70,12 +80,14 @@ const previousPage = () => {
     renderPages(buttonToDisable())
 }
 
+console.log("start end", start, end);
+
 const buttonToDisable = () => {
     if (end === totalPages) {
         return 'next';
     }
 
-    if (end <= 5) {
+    if (start === 1) {
         return 'previous';
     }
     // TODo ADD condition to disable previous button
@@ -97,7 +109,8 @@ const changePage = (page) => {
     // getPatients();
 }
 
-renderPages();
+
+renderPages(buttonToDisable('previous'));
 
 getPatients();
 
@@ -146,6 +159,62 @@ const handleFilterTabChange = (e) => {
             filterTabs[i].classList.remove('filter-tab');
         }
     }
+};
+
+const setDate = (date, month, hours, minutes, seconds) => {
+    let currentDate = new Date();
+    currentDate.setDate(date);
+    currentDate.setMonth(month);
+    currentDate.setHours(hours);
+    currentDate.setMinutes(minutes);
+    currentDate.setSeconds(seconds);
+
+    return currentDate;
+}
+
+const applyFilter = () => {
+    let startDate = '', endDate = '';
+    const searchText = document.getElementById('search-filter').value
+    filter.search = searchText;
+
+    if (selectedTab === 'Year to Date') {
+        startDate = setDate(1, 0,0, 0,0);
+        const todayDate = new Date();
+        endDate = todayDate;
+    } else if (selectedTab === 'Month to Date') {
+        const todayDate = new Date();
+        startDate = setDate(1, todayDate.getMonth(), 0, 0, 0);
+        endDate = todayDate;
+    } else if (selectedTab === 'Last 90 Days') {
+        const todayDate = new Date();
+        let last90Day = todayDate.setDate(todayDate.getDate() - 90);
+        let last90DayDate = new Date(last90Day);
+        last90DayDate.setHours(0); last90DayDate.setMinutes(0); last90DayDate.setSeconds(0);
+        startDate = last90DayDate;
+        endDate = new Date();
+        // console.log(new Date(new Date().setDate(new Date().getDate() - 90)))
+    } else if (selectedTab === 'Last 60 Days') {
+        const todayDate = new Date();
+        let last60Day = todayDate.setDate(todayDate.getDate() - 60);
+        let last60DayDate = new Date(last60Day);
+        last60DayDate.setHours(0); last60DayDate.setMinutes(0); last60DayDate.setSeconds(0);
+        startDate = last60DayDate;
+        endDate = new Date();
+        // console.log(new Date(new Date().setDate(new Date().getDate() - 90)))
+    } else if (selectedTab === 'Last 30 Days') {
+        const todayDate = new Date();
+        let last30Day = todayDate.setDate(todayDate.getDate() - 30);
+        let last30DayDate = new Date(last30Day);
+        last30DayDate.setHours(0); last30DayDate.setMinutes(0); last30DayDate.setSeconds(0);
+        startDate = last30DayDate;
+        endDate = new Date();
+        // console.log(new Date(new Date().setDate(new Date().getDate() - 90)))
+    }
+
+    filter.startDate = startDate;
+    filter.endDate = endDate;
+
+    console.log("filter", filter);
 };
 
 document.getElementById('table-tab-box').addEventListener('click', (e) => {
