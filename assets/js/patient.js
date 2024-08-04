@@ -23,7 +23,7 @@ const renderPages = (disableBtn = '') => {
     pagesDiv.innerHTML = "";
 
     pagesDiv.innerHTML = `<li class="page-item">
-                       <span class="page-link ${disableBtn === 'next' ? 'bg-secondary' : 'cursor-pointer'}" ${disableBtn === 'next' ? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
+                       <span class="page-link ${disableBtn === 'previous' ? 'bg-secondary' : 'cursor-pointer'}" ${disableBtn === 'previous' ? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
                          <span aria-hidden="true">&laquo;</span>
                        </span>
                 </li> `;
@@ -62,13 +62,21 @@ const nextPage = () => {
 const previousPage = () => {
     end = start - 1;
     start = start - 5;
+    if (start < 1) {
+        start = 1;
+    }
     currentPage = end;
+
     renderPages(buttonToDisable())
 }
 
 const buttonToDisable = () => {
     if (end === totalPages) {
         return 'next';
+    }
+
+    if (end <= 5) {
+        return 'previous';
     }
     // TODo ADD condition to disable previous button
     return '';
