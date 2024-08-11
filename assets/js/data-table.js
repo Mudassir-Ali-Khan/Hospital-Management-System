@@ -3,6 +3,12 @@ document.getElementById('filterByDropdown').addEventListener('click', () => {
     customDropdown.classList.toggle('showDropdown');
 });
 
+document.getElementById('columnsDropdownIcon').addEventListener('click', () => {
+    const customDropdown = document.getElementById('custom-dropdown-columns');
+    customDropdown.classList.toggle('showDropdown');
+});
+
+
 const toggleFullscreen = () => {
     const table = document.getElementById('dataTable');
     const tabledata = document.getElementById('tabledata');

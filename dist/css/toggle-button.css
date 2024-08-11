@@ -127,7 +127,7 @@
   }
   
   .toggle-button input:checked + .knob {
-    background-color: #76b176;
+    background-color: #335476;
   }
   
   .toggle-button input:focus + .knob {
