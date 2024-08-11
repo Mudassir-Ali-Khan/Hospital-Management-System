@@ -6,9 +6,27 @@ let currentPage = 1;
 let totalRecords = 1023;
 let pageLimit = 10;
 let totalPages = Math.ceil(totalRecords / pageLimit);
-console.log("Total Pages", totalPages)
 let start = 1;
 let end = 5;
+let sortOrder = '';
+let sortColumn = '';
+
+const columns = [
+    { label: 'First Name', key: 'firstname', sortable: true },
+    { label: 'Last Name', key: 'lastname', sortable: true  },
+    { label: 'Email', key: 'email', sortable: true, },
+    { label: 'Phone Number', key: 'phonenumber', sortable: false,  },
+    { label: 'Gender', key: 'gender', sortable: false, },
+    { label: 'Action', key: 'action', sortable: false },
+]
+
+const data = [
+    { firstname: 'Riyan 1', lastname: 'Irfan 1', email: 'rayyan1@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Riyan 2', lastname: 'Irfan 2', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Riyan 3', lastname: 'Irfan 3', email: 'rayyan3@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Riyan 4', lastname: 'Irfan 4', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Riyan 5', lastname: 'Irfan 5', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
+]
 
 let filter = {
     startDate: '',
@@ -110,7 +128,116 @@ const changePage = (page) => {
 }
 
 
+const changeSort = (key) => {
+
+    if (columns.find(el => el.key === key).sortable === false) {
+        return;
+    }
+    console.log("Key", key);
+    sortColumn = key;
+    if (sortOrder === '') {
+        sortOrder = 'asc';
+    } else {
+        if (sortOrder === 'asc') {
+            sortOrder = 'desc';
+        } else if (sortOrder === 'desc') {
+            sortOrder = 'asc';
+        }
+    }
+
+    data.sort((first, second) => {
+        if (sortOrder === 'asc') {
+            if (first[key] > second[key]) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        if (sortOrder === 'desc') {
+            if (first[key] < second[key]) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    })
+    // 1, -1, 0
+    renderColumns();
+    renderData();
+}
+
+
+const renderColumns = () => {
+    const tableColumns = document.getElementById('table-columns');
+    tableColumns.innerHTML = "";
+
+    // columns.forEach(function (element) {
+
+    // })
+
+    // fa-sort-up
+    // fa-sort-down
+
+    // column.key === sortColumn , sortOrder == 'asc' ==> fa-sort-up otherwise fa-sort-down ==> if only sortable is true then show fa-sort
+
+    columns.forEach((column, index) => {
+      if (column.key !== 'action') {
+          tableColumns.innerHTML += `
+                <th onclick="changeSort('${column.key}')">${column.label} ${column.sortable ? `<i class="fas fa-sort ${column.key === sortColumn ? sortOrder === 'asc' ? 'fa-sort-up' : 'fa-sort-down' : '' } "></i>` : ''}</th>
+            `;
+      }
+    })
+
+    if (columns[ columns.length - 1].key === 'action' ) {
+        tableColumns.innerHTML += `
+            <th>Action</th>
+        `;
+    }
+
+    // columns.forEach((column, index) => {
+    //     tableColumns.innerHTML += `
+    //         <th onclick="sortTable(${index})">${column.label} ${column.sortable? `<i class="fas fa-sort ${column.key === sortColumn? sortOrder === 'asc'? 'fa-sort-up' : 'fa-sort-down' : ''}"></i>` : ''}</th>
+    //     `;
+    // });
+}
+
+const renderData = () => {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = "";
+
+    data.forEach((element, index) => {
+       tableBody.innerHTML += `
+        <tr>
+            <td> ${element.firstname} </td>
+            <td> ${element.lastname} </td>
+            <td> ${element.email} </td>
+            <td> ${element.phonenumber} </td>
+            <td> ${element.gender} </td>
+
+            ${ columns[ columns.length - 1].key === 'action' ? ` <td>
+                <div class="dropdown">
+                    <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
+                    aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Edit</a>
+                    <a class="dropdown-item" href="#">Details</a>
+                    </div>
+                </div>
+            </td>` : '' }
+
+        </tr>
+       `
+    })
+    
+}
+
+
 renderPages(buttonToDisable('previous'));
+renderColumns();
+
+renderData();
+
 
 getPatients();
 
