@@ -28,6 +28,34 @@ const data = [
     { firstname: 'Riyan 5', lastname: 'Irfan 5', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
 ]
 
+
+const Download = () => {
+
+    const titleKeys = Object.keys(data[0]);
+    const refinedData = [];
+    refinedData.push(titleKeys);
+    data.forEach(item => {
+        const itemValues = Object.values(item).map(value => {
+            return `"${value}"`;
+        });
+        refinedData.push(itemValues);  
+    });
+
+    let csvContent = '';
+    refinedData.forEach(row => {
+        csvContent += row.join(',') + '\n';
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const objUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = objUrl;
+    link.download = "data.csv";
+    link.click();
+};
+
+
 let filter = {
     startDate: '',
     endDate: '',
