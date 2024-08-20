@@ -251,49 +251,50 @@
                 <div class="dropdown show">
                   <i class="fa fa-columns cursor-pointer" id="columnsDropdownIcon" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Hide/Show Column"></i>
                   <div class="custom-dropdown rounded mt-1" id="custom-dropdown-columns" aria-labelledby="columnsDropdownIcon">
-                    <div>
-                      <div class="d-flex justify-content-between mx-3 mb-2 py-2">
-                        <button class="btn btn-primary" style="font-size: 14px;">HIDE ALL</button>
-                        <button class="btn btn-primary" style="font-size: 14px;">SHOW ALL</button>
+                      <div>
+                          <div class="d-flex justify-content-between mx-3 mb-2 py-2">
+                              <button onclick="hideAllColumns()" class="btn btn-primary" style="font-size: 14px;">HIDE ALL</button>
+                              <button onclick="showAllColumns()" class="btn btn-primary" style="font-size: 14px;">SHOW ALL</button>
+                          </div>
                       </div>
-                    </div>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <label class="toggle-button mt-1">
-                        <input type="checkbox">
-                        <span class="knob"></span>
-                      </label>
-                      <span class="toggle-text mb-1">First Name</span>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <label class="toggle-button mt-1">
-                        <input type="checkbox">
-                        <span class="knob"></span>
-                      </label>
-                      <span class="toggle-text mb-1">Last Name</span>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <label class="toggle-button mt-1">
-                        <input type="checkbox">
-                        <span class="knob"></span>
-                      </label>
-                      <span class="toggle-text mb-1">Email</span>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <label class="toggle-button mt-1">
-                        <input type="checkbox">
-                        <span class="knob"></span>
-                      </label>
-                      <span class="toggle-text mb-1">Phone Number</span>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <label class="toggle-button mt-1">
-                        <input type="checkbox">
-                        <span class="knob"></span>
-                      </label>
-                      <span class="toggle-text mb-1">Gender</span>
-                    </a>
+                      <a class="dropdown-item d-flex align-items-center" href="#">
+                          <label class="toggle-button mt-1">
+                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-firstname" onclick="toggleColumnVisibility(0)" checked>
+                              <span class="knob"></span>
+                          </label>
+                          <span class="toggle-text mb-1">First Name</span>
+                      </a>
+                      <a class="dropdown-item d-flex align-items-center" href="#">
+                          <label class="toggle-button mt-1">
+                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-lastname" onclick="toggleColumnVisibility(1)" checked>
+                              <span class="knob"></span>
+                          </label>
+                          <span class="toggle-text mb-1">Last Name</span>
+                      </a>
+                      <a class="dropdown-item d-flex align-items-center" href="#">
+                          <label class="toggle-button mt-1">
+                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-email" onclick="toggleColumnVisibility(2)" checked>
+                              <span class="knob"></span>
+                          </label>
+                          <span class="toggle-text mb-1">Email</span>
+                      </a>
+                      <a class="dropdown-item d-flex align-items-center" href="#">
+                          <label class="toggle-button mt-1">
+                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-phonenumber" onclick="toggleColumnVisibility(3)" checked>
+                              <span class="knob"></span>
+                          </label>
+                          <span class="toggle-text mb-1">Phone Number</span>
+                      </a>
+                      <a class="dropdown-item d-flex align-items-center" href="#">
+                          <label class="toggle-button mt-1">
+                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-gender" onclick="toggleColumnVisibility(4)" checked>
+                              <span class="knob"></span>
+                          </label>
+                          <span class="toggle-text mb-1">Gender</span>
+                      </a>
                   </div>
-                </div>
+              </div>
+              
                 <i class="fa fa-align-justify mx-3 cursor-pointer" aria-hidden="true" data-toggle="tooltip"
                   data-placement="top" title="Density" onclick="handleDensity()"></i>
                 <i class="fa fa-arrows-alt cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top"
@@ -311,7 +312,7 @@
        
                <!-- Main Table -->
                <div class="table-responsive">
-                 <table class="table table-striped">
+                 <table class="table table-striped" id="data-table">
                    <thead class="bg-secondary">
                      <tr id="table-columns">
                      </tr>

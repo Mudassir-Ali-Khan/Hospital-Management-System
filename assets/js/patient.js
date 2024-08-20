@@ -1,5 +1,3 @@
-
-
 const TABS = ["All", "Inactive", "Active"];
 let currentTab = "All";
 let currentPage = 1;
@@ -12,12 +10,12 @@ let sortOrder = '';
 let sortColumn = '';
 
 const columns = [
-    { label: 'First Name', key: 'firstname', sortable: true },
-    { label: 'Last Name', key: 'lastname', sortable: true  },
-    { label: 'Email', key: 'email', sortable: true, },
-    { label: 'Phone Number', key: 'phonenumber', sortable: false,  },
-    { label: 'Gender', key: 'gender', sortable: false, },
-    { label: 'Action', key: 'action', sortable: false },
+    { label: 'First Name', key: 'firstname', sortable: true, isHidden: false },
+    { label: 'Last Name', key: 'lastname', sortable: true, isHidden: false  },
+    { label: 'Email', key: 'email', sortable: true, isHidden: false },
+    { label: 'Phone Number', key: 'phonenumber', sortable: false, isHidden: false  },
+    { label: 'Gender', key: 'gender', sortable: false, isHidden: false },
+    { label: 'Action', key: 'action', sortable: false, isHidden: false },
 ]
 
 const data = [
@@ -27,6 +25,56 @@ const data = [
     { firstname: 'Riyan 4', lastname: 'Irfan 4', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
     { firstname: 'Riyan 5', lastname: 'Irfan 5', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
 ]
+
+const toggleColumnVisibility = (columnIndex) => {
+
+    columns[columnIndex].isHidden = !columns[columnIndex].isHidden;
+
+
+    const table = document.getElementById('data-table');
+    const rows = table.rows;
+    
+    for (let i = 0; i < rows.length; i++) {
+        const cell = rows[i].cells[columnIndex];
+        if (columns[columnIndex].isHidden) {
+            cell.style.display = 'none';
+        } else {
+            cell.style.display = '';
+        }
+    }
+};
+
+const hideAllColumns = () => {
+    columns.forEach((column, index) => {
+        column.isHidden = true;
+        const checkBox = document.getElementById(`toggle-${column.key}`);
+        checkBox.checked = false;
+        
+        const table = document.getElementById('data-table');
+        const rows = table.rows;
+
+        for (let i = 0; i < rows.length; i++) {
+            const cell = rows[i].cells[index];
+            cell.style.display = 'none';
+        }
+    });
+};
+
+const showAllColumns = () => {
+    columns.forEach((column, index) => {
+        column.isHidden = false;
+        const checkBox = document.getElementById(`toggle-${column.key}`);
+        checkBox.checked = true;
+
+        const table = document.getElementById('data-table');
+        const rows = table.rows;
+
+        for (let i = 0; i < rows.length; i++) {
+            const cell = rows[i].cells[index];
+            cell.style.display = '';
+        }
+    });
+};
 
 
 const Download = () => {
