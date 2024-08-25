@@ -1,4 +1,4 @@
-const TABS = ["All", "Inactive", "Active"];
+const TABS = ["All", "Male", "Female", "Transgender", "Other"];
 let currentTab = "All";
 let currentPage = 1;
 let totalRecords = 1023;
@@ -19,12 +19,24 @@ const columns = [
 ]
 
 const data = [
-    { firstname: 'Riyan 1', lastname: 'Irfan 1', email: 'rayyan1@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'Riyan 2', lastname: 'Irfan 2', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'Riyan 3', lastname: 'Irfan 3', email: 'rayyan3@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'Riyan 4', lastname: 'Irfan 4', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'Riyan 5', lastname: 'Irfan 5', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Riyan 1', lastname: 'Irfan Ibrahim', email: 'rayyan1@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'User', lastname: 'User lstname', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Mudassir', lastname: 'Mouazam', email: 'rayyan3@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'John', lastname: 'Doe', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
+    { firstname: 'Rayyan', lastname: 'Irfan', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
 ]
+
+
+const renderTabs = () => {
+    const tabsBox = document.getElementById('table-tab-box');
+    TABS.forEach((tab, index) => {
+        if (index === 0) {
+            tabsBox.innerHTML += ` <button class="btn btn-primary custom-tab table-tab">${tab}</button>`
+        } else {
+            tabsBox.innerHTML += `<button class="btn btn-primary custom-tab-inactive table-tab">${tab}</button>`
+        }
+    })
+}
 
 const toggleColumnVisibility = (columnIndex) => {
 
@@ -43,6 +55,24 @@ const toggleColumnVisibility = (columnIndex) => {
         }
     }
 };
+
+const renderToggleButtons = () => {
+    const toggleButtonBox = document.getElementById('columns-visibilty-box');
+
+    columns.forEach((column, index) => {
+        if (column.key !== 'action') {
+            toggleButtonBox.innerHTML += `
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                            <label class="toggle-button mt-1">
+                                <input type="checkbox" class="column-toggle-checkbox" id="toggle-${column.key}" onclick="toggleColumnVisibility('${index}')" checked>
+                                <span class="knob"></span>
+                            </label>
+                            <span class="toggle-text mb-1">${column.label}</span>
+              </a> 
+            `
+        }
+    })
+}
 
 const hideAllColumns = () => {
     columns.forEach((column, index) => {
@@ -78,8 +108,8 @@ const showAllColumns = () => {
 
 
 const Download = () => {
-
-    const titleKeys = Object.keys(data[0]);
+// add logic to show only the isHidden = false columns
+    const titleKeys = columns.map((column) => column.label).filter((column) => column !== 'Action')
     const refinedData = [];
     refinedData.push(titleKeys);
     data.forEach(item => {
@@ -285,13 +315,13 @@ const renderData = () => {
     data.forEach((element, index) => {
        tableBody.innerHTML += `
         <tr>
-            <td> ${element.firstname} </td>
-            <td> ${element.lastname} </td>
-            <td> ${element.email} </td>
-            <td> ${element.phonenumber} </td>
-            <td> ${element.gender} </td>
+            <td> <span>${element.firstname}</span>  </td>
+            <td> <span>${element.lastname}</span>   </td>
+            <td> <span>${element.email}</span>  </td>
+            <td> <span> ${element.phonenumber}</span>  </td>
+            <td> <span>${element.gender}</span> </td>
 
-            ${ columns[ columns.length - 1].key === 'action' ? ` <td>
+            ${ columns[ columns.length - 1].key === 'action' ? ` <td class="">
                 <div class="dropdown">
                     <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
                     aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
@@ -305,14 +335,37 @@ const renderData = () => {
         </tr>
        `
     })
-    
 }
 
+const showSkeletonLoading = () => {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = "";
+
+    for (let i = 0; i < 12; i++) {
+        tableBody.innerHTML += `
+        <tr>
+            <td> <h6 class="skeleton-loading">1</h6>  </td>
+            <td> <h6 class="skeleton-loading">123123</h6>  </td>
+            <td> <h6 class="skeleton-loading">123123</h6>  </td>
+            <td> <h6 class="skeleton-loading">123123</h6>  </td>
+            <td> <h6 class="skeleton-loading">123123</h6>  </td>
+            <td> <h6 class="skeleton-loading">123123</h6>  </td>
+        </tr>
+       `
+    }
+}
 
 renderPages(buttonToDisable('previous'));
 renderColumns();
 
-renderData();
+showSkeletonLoading();
+
+setTimeout(() => {
+    renderData();
+}, 3000)
+
+renderTabs();
+renderToggleButtons();
 
 
 getPatients();

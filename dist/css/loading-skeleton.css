@@ -1,0 +1,61 @@
+/* 
+// Bootstrap Loading Skeleton
+%loading-skeleton {
+    color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #eee;
+    border-color: #eee;
+  
+    &::placeholder {
+      color: transparent;
+    }
+  }
+  @keyframes loading-skeleton {
+    from {
+      opacity: .4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .loading-skeleton {
+    pointer-events: none;
+    animation: loading-skeleton 1s infinite alternate;
+    
+    img {
+      filter: grayscale(100) contrast(0%) brightness(1.8);
+    }
+    h1, h2, h3, h4, h5, h6,
+    p, li,
+    .btn,
+    label,
+    .form-control {
+      @extend %loading-skeleton;
+    }
+  } */
+
+.skeleton-loading {
+    color: transparent;
+    background-color: lightgray;
+    border-color: #eee;
+
+    border-radius: 8px;
+    /* margin: 20px !important; */
+    width: 100%;
+
+    animation: skeletonLoading 1s infinite alternate;
+}
+
+.dark-mode .skeleton-loading {
+  background-color: #717579;
+}
+
+@keyframes skeletonLoading {
+  from {
+    opacity: .4;
+  }
+  to {
+    opacity: 1;
+  }
+}

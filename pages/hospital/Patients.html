@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <link rel="stylesheet" href="../../dist/css/data-table.css">
   <link rel="stylesheet" href="../../dist/css/toggle-button.css">
+  <link rel="stylesheet" href="../../dist/css/loading-skeleton.css">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -204,9 +205,6 @@
                <div class="d-flex justify-content-between border-bottom">
                  <!-- this is left tab div -->
                  <div id="table-tab-box">
-                   <button class="btn btn-primary custom-tab table-tab">All</button>
-                   <button class="btn btn-primary custom-tab-inactive table-tab">Inactive</button>
-                   <button class="btn btn-primary custom-tab-inactive table-tab">Active</button>
                  </div>
        
                  <!-- This is right filter div -->
@@ -257,41 +255,8 @@
                               <button onclick="showAllColumns()" class="btn btn-primary" style="font-size: 14px;">SHOW ALL</button>
                           </div>
                       </div>
-                      <a class="dropdown-item d-flex align-items-center" href="#">
-                          <label class="toggle-button mt-1">
-                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-firstname" onclick="toggleColumnVisibility(0)" checked>
-                              <span class="knob"></span>
-                          </label>
-                          <span class="toggle-text mb-1">First Name</span>
-                      </a>
-                      <a class="dropdown-item d-flex align-items-center" href="#">
-                          <label class="toggle-button mt-1">
-                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-lastname" onclick="toggleColumnVisibility(1)" checked>
-                              <span class="knob"></span>
-                          </label>
-                          <span class="toggle-text mb-1">Last Name</span>
-                      </a>
-                      <a class="dropdown-item d-flex align-items-center" href="#">
-                          <label class="toggle-button mt-1">
-                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-email" onclick="toggleColumnVisibility(2)" checked>
-                              <span class="knob"></span>
-                          </label>
-                          <span class="toggle-text mb-1">Email</span>
-                      </a>
-                      <a class="dropdown-item d-flex align-items-center" href="#">
-                          <label class="toggle-button mt-1">
-                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-phonenumber" onclick="toggleColumnVisibility(3)" checked>
-                              <span class="knob"></span>
-                          </label>
-                          <span class="toggle-text mb-1">Phone Number</span>
-                      </a>
-                      <a class="dropdown-item d-flex align-items-center" href="#">
-                          <label class="toggle-button mt-1">
-                              <input type="checkbox" class="column-toggle-checkbox" id="toggle-gender" onclick="toggleColumnVisibility(4)" checked>
-                              <span class="knob"></span>
-                          </label>
-                          <span class="toggle-text mb-1">Gender</span>
-                      </a>
+                      <div id="columns-visibilty-box">
+                    </div>
                   </div>
               </div>
               
@@ -308,8 +273,7 @@
                   </div>
                 </div>
               </div>
-              
-       
+                     
                <!-- Main Table -->
                <div class="table-responsive">
                  <table class="table table-striped" id="data-table">
@@ -318,24 +282,6 @@
                      </tr>
                    </thead>
                    <tbody id="table-body">
-                     <tr>
-                       <td>Rayyan</td>
-                       <td>rayyan@gmail.com</td>
-                       <td >Islamabad</td>
-                       <td >123123</td>
-                       <td ><span class="badge bg-success">Active</span></td>
-                       <td>
-                         <div class="dropdown">
-                           <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
-                             aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
-                           <div class="dropdown-menu">
-                             <a class="dropdown-item" href="#">Action</a>
-                             <a class="dropdown-item" href="#">Another action</a>
-                             <a class="dropdown-item" href="#">Something else here</a>
-                           </div>
-                         </div>
-                       </td>
-                     </tr>
                    </tbody>
        
                  </table>
@@ -358,15 +304,11 @@
              </div>
            </div>
     
-          <!-- Custom Code Here -->
-          <!-- /.row -->
         </div><!--/. container-fluid -->
       </section>
     </div>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
