@@ -13,4 +13,9 @@ const loadProfile = () => {
     infoDiv.innerHTML = `<a href="#" class="d-block">${fullName}</a>`
 }
 
+
+
+
+
+
 loadProfile();

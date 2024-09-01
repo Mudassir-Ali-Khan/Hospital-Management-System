@@ -18,13 +18,13 @@ const columns = [
     { label: 'Action', key: 'action', sortable: false, isHidden: false },
 ]
 
-const data = [
-    { firstname: 'Riyan 1', lastname: 'Irfan Ibrahim', email: 'rayyan1@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'User', lastname: 'User lstname', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'Mudassir', lastname: 'Mouazam', email: 'rayyan3@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'John', lastname: 'Doe', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
-    { firstname: 'Rayyan', lastname: 'Irfan', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
-]
+// const data = [
+    
+//     { firstname: 'User', lastname: 'User lstname', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
+//     { firstname: 'Mudassir', lastname: 'Mouazam', email: 'rayyan3@gmail.com', phonenumber: '123123123', gender: 'male' },
+//     { firstname: 'John', lastname: 'Doe', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
+//     { firstname: 'Rayyan', lastname: 'Irfan', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
+// ]
 
 
 const renderTabs = () => {
@@ -142,10 +142,22 @@ let filter = {
 
 const getPatients = async () => {
     if (currentTab === 'All') {
-        const response = await axios.get(BASE_URL + '/api/patients')
-        console.log(response.data);
+        try {
+            const response = await axios.get(BASE_URL + '/api/patients');
+            const patients = response.data;
+            data = patients;
+            renderData();
+            totalRecords = data.length; 
+            totalPages = Math.ceil(totalRecords / pageLimit);
+            renderPages(buttonToDisable());
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error fetching patients:", error);
+        }
     }
-}
+};
+
+
 
 const renderPages = (disableBtn = '') => {
     const pagesDiv = document.getElementById('pages');
