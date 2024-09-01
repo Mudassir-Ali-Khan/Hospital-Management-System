@@ -18,7 +18,25 @@
   <link rel="stylesheet" href="../../dist/css/data-table.css">
   <link rel="stylesheet" href="../../dist/css/toggle-button.css">
   <link rel="stylesheet" href="../../dist/css/loading-skeleton.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    /* Custom styles for flatpickr calendar */
+    .flatpickr-calendar {
+      position: absolute;
+    }
+    .flatpickr-day.selected {
+      background-color: #007bff; /* Blue background for selected range */
+      color: white;
+    }
+    .flatpickr-day.startRange {
+      background-color: #007bff;
+      color: white;
+    }
+    .flatpickr-day.endRange {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -240,8 +258,12 @@
                             <button class="btn btn-primary filter-tab-inactive filter-table-tab">Last 90 Days</button>
                             <button class="btn btn-primary filter-tab-inactive filter-table-tab">Last 60 Days</button>
                             <button class="btn btn-primary filter-tab-inactive filter-table-tab">Last 30 Days</button>
-                            <button class="btn btn-primary filter-tab-inactive filter-table-tab">Select Custom
+                            <button id="custom-range-button" class="btn btn-primary filter-tab-inactive filter-table-tab">Select Custom
                               Range</button>
+                              <div id="date-range-picker" style="display: none;">
+                                <input type="text" id="date-start" placeholder="Start Date">
+                                <input type="text" id="date-end" placeholder="End Date">
+                              </div>
                           </div>
                         </div>
                         <div class="mt-3">
@@ -364,9 +386,8 @@
   <script src="/assets/js/data-table.js"></script>
   <script src="/assets/js/common.js"></script>
   <script src="/assets/js/patient.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script src="/assets/js/calendar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 
 </html>
