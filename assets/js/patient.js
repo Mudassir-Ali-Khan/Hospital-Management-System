@@ -1,4 +1,4 @@
-const TABS = ["All", "Male", "Female", "Transgender", "Other"];
+const TABS = ["All", "Male", "Female", "Bigender", "Polygender", "Non-binary", "Other"];
 let currentTab = "All";
 
 const columns = [
@@ -22,7 +22,7 @@ const getData = async () => {
         try {
             // /api/patients?page=1&limit=10
             showSkeletonLoading();
-            const response = await axios.get(BASE_URL + `/api/patients?page=${currentPage}&limit=${pageLimit}`);
+            const response = await axios.get(BASE_URL + `/api/patients?page=${currentPage}&limit=${pageLimit}status=${genderTab} : ''`);
             const patients = response.data.data; // data, meta
             data = patients;
             renderData();

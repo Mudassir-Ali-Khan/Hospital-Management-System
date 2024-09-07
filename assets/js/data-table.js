@@ -56,6 +56,7 @@ let start = 1;
 let end = 0;
 let sortOrder = '';
 let sortColumn = '';
+let genderTab = '';
 let data = [];
 
 // logics of filters
@@ -326,7 +327,15 @@ const handleTableTabChange = (e) => {
     currentTab = tabClicked;
     // console.log("tabClicked", tabClicked);
     const tabIndex = TABS.indexOf(tabClicked); // index, -1;
-    // console.log(tabIndex);
+    const tabValue = TABS[tabIndex];
+
+    if (tabValue === "All") {
+        genderTab = ""; 
+    } else {
+        genderTab = tabValue; 
+    }
+    console.log("Selected genderTab:", genderTab);
+    
     const tableTabs = document.getElementsByClassName('table-tab');
     // console.log("tableTabs", tableTabs);
 
