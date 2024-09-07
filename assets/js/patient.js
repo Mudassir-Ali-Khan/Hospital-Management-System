@@ -1,7 +1,8 @@
 const TABS = ["All", "Male", "Female", "Bigender", "Polygender", "Non-binary", "Other"];
 let currentTab = "All";
+let addBtnText = "Add Patient";
 
-const columns = [
+let columns = [
     { label: 'First Name', key: 'firstname', sortable: true, isHidden: false },
     { label: 'Last Name', key: 'lastname', sortable: true, isHidden: false  },
     { label: 'Email', key: 'email', sortable: true, isHidden: false },
@@ -20,28 +21,25 @@ const columns = [
 
 const getData = async () => {
         try {
-            // /api/patients?page=1&limit=10
             showSkeletonLoading();
-            const response = await axios.get(BASE_URL + `/api/patients?page=${currentPage}&limit=${pageLimit}status=${genderTab} : ''`);
-            const patients = response.data.data; // data, meta
-            data = patients;
+            const response = await getApiData();
+            data = response.data.data; // data, meta, this line will change.
             renderData();
-            totalRecords = response.data.meta.totalRecords; 
-            totalPages = Math.ceil(response.data.meta.totalRecords / pageLimit);
-            const pagesToRender = Math.ceil(totalRecords / pageLimit);
-            if (start === 1) {
-                end = 5;
-            } else {
-                console.log("pagesToRender", pagesToRender);
-                // end = pagesToRender > 5 ? 5 : pagesToRender;
-            }
-            renderPages(buttonToDisable('previous'));
-            console.log(response.data);
+            adjustPages(response);
         } catch (error) {
             console.error("Error fetching patients:", error);
         }
 };
 
+const getApiData = async () => {
+    try {
+        const dateFilter = useDateFilter();
+        const response = await axios.get(BASE_URL + `/api/patients?page=${currentPage}&limit=${pageLimit}&status=${genderTab}&search=${filter.search}&dateFilter=${dateFilter}`);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
 
 // this will change as per data
 const renderData = () => {
@@ -51,11 +49,11 @@ const renderData = () => {
     data.forEach((element, index) => {
        tableBody.innerHTML += `
         <tr>
-            <td> <span>${element.firstname}</span>  </td>
-            <td> <span>${element.lastname}</span>   </td>
-            <td> <span>${element.email}</span>  </td>
-            <td> <span> ${element.phonenumber}</span>  </td>
-            <td> <span>${element.gender}</span> </td>
+            <td data-attr="firstname"> <span>${element.firstname}</span>  </td>
+            <td data-attr="lastname"> <span>${element.lastname}</span>   </td>
+            <td data-attr="email"> <span>${element.email}</span>  </td>
+            <td data-attr="phonenumber"> <span> ${element.phonenumber}</span>  </td>
+            <td data-attr="gender"> <span>${element.gender}</span> </td>
 
             ${ columns[ columns.length - 1].key === 'action' ? ` <td class="">
                 <div class="dropdown">
@@ -70,8 +68,15 @@ const renderData = () => {
 
         </tr>
        `
-    })
-}
+    });
+
+    adjustColumns();
+};
+
+const handleClickAddButton = () => {
+    // this function will be called when clicked on the add button
+    console.log("Clicked add button");
+};
 
 // this won't be change
 const init = () => {

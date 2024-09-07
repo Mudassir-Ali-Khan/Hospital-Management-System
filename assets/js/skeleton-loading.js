@@ -5,13 +5,8 @@ const showSkeletonLoading = () => {
     for (let i = 0; i < 12; i++) {
         tableBody.innerHTML += `
         <tr>
-            <td> <h6 class="skeleton-loading">1</h6>  </td>
-            <td> <h6 class="skeleton-loading">123123</h6>  </td>
-            <td> <h6 class="skeleton-loading">123123</h6>  </td>
-            <td> <h6 class="skeleton-loading">123123</h6>  </td>
-            <td> <h6 class="skeleton-loading">123123</h6>  </td>
-            <td> <h6 class="skeleton-loading">123123</h6>  </td>
+          ${columns.filter(column => !column.isHidden).map(column => `<td> <h6 class="skeleton-loading">${column.key}</h6>  </td>`)}
         </tr>
-       `
+       `.replaceAll(',','')
     }
 }

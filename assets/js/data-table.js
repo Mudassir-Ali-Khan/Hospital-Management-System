@@ -1,14 +1,3 @@
-document.getElementById('filterByDropdown').addEventListener('click', () => {
-    const customDropdown = document.getElementById('custom-dropdown');
-    customDropdown.classList.toggle('showDropdown');
-});
-
-document.getElementById('columnsDropdownIcon').addEventListener('click', () => {
-    const customDropdown = document.getElementById('custom-dropdown-columns');
-    customDropdown.classList.toggle('showDropdown');
-});
-
-
 const toggleFullscreen = () => {
     const table = document.getElementById('dataTable');
     const tabledata = document.getElementById('tabledata');
@@ -66,14 +55,14 @@ let filter = {
     search: '',
 }
 const FILTERTABS = ["Year to Date", "Month to Date", "Last 90 Days", "Last 60 Days", "Last 30 Days", "Select Custom Range"];
-let selectedTab = "Year to Date";
+let selectedTab = "";
 
 const handleFilterTabChange = (e) => {
     const clickedTab = e.srcElement.innerText;
+    const filterTabs = document.getElementsByClassName('filter-table-tab');
     selectedTab = clickedTab;
     const tabIndex = FILTERTABS.indexOf(clickedTab);
 
-    const filterTabs = document.getElementsByClassName('filter-table-tab');
     for (let i = 0; i < filterTabs.length; i++) {
         if (i === tabIndex) {
             filterTabs[i].classList.remove('filter-tab-inactive');
@@ -83,7 +72,6 @@ const handleFilterTabChange = (e) => {
             filterTabs[i].classList.remove('filter-tab');
         }
         if (i === tabIndex && FILTERTABS[i] === 'Select Custom Range') {
-            console.log("Here");
             const customRangeDiv = document.getElementById('custom-range-div');
             customRangeDiv.classList.add('d-block');
             customRangeDiv.classList.remove('d-none');
@@ -154,13 +142,57 @@ const applyFilter = () => {
             return;
         }
         // console.log(startDateInput.value, endDateInput.value);
+    } 
+
+    if (selectedTab !== '') {
+        filter.startDate = new Date(startDate).toLocaleDateString('en-US');
+        filter.endDate = new Date(endDate).toLocaleDateString('en-US');
     }
 
-    filter.startDate = startDate;
-    filter.endDate = endDate;
-
     console.log("filter", filter);
+
+    currentPage = 1;
+    getData();
 };
+
+const removeFilter = () => {
+    filter = {
+        startDate: '',
+        endDate: '',
+        search: '',
+    }
+    const searchText = document.getElementById('search-filter')
+    searchText.value = '';
+    currentPage = 1;
+    const customDropdown = document.getElementById('custom-dropdown');
+    customDropdown.classList.toggle('showDropdown');
+    const filterTabs = document.getElementsByClassName('filter-table-tab');
+    selectedTab = '';
+    if (selectedTab == '') {
+        for (let i = 0; i < filterTabs.length; i++) {
+            filterTabs[i].classList.add('filter-tab-inactive');
+            filterTabs[i].classList.remove('filter-tab');
+        }
+    }
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
+
+    startDateInput.innerHTML = '';
+    endDateInput.innerHTML = '';
+    getData();
+}
+
+const useDateFilter = () => {
+    let dateFilter = '';
+    if (filter.endDate && filter.startDate) {
+        const startDate = filter.startDate;
+        const endDate = filter.endDate;
+        console.log("StartDate", endDate, startDate)
+        dateFilter = startDate + ',' + endDate;
+    }
+
+    return dateFilter;
+}
 
 const renderTabs = () => {
     const tabsBox = document.getElementById('table-tab-box');
@@ -176,6 +208,8 @@ const renderTabs = () => {
 const renderColumns = () => {
     const tableColumns = document.getElementById('table-columns');
     tableColumns.innerHTML = "";
+
+    console.log("here here");
 
     // column.key === sortColumn , sortOrder == 'asc' ==> fa-sort-up otherwise fa-sort-down ==> if only sortable is true then show fa-sort
 
@@ -204,7 +238,7 @@ const renderPages = (disableBtn = '') => {
 
     // previous button
     pagesDiv.innerHTML = `<li class="page-item">
-                       <button class="page-link ${disableBtn === 'previous' ? 'bg-secondary' : 'cursor-pointer'}" ${disableBtn === 'previous' ? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
+                       <button class="page-link ${(disableBtn === 'previous' || disableBtn === 'both') ? 'bg-secondary' : 'cursor-pointer'}" ${(disableBtn === 'previous'  || disableBtn === 'both')? 'disabled' : ''} onclick="previousPage()" aria-label="Previous">
                          <span aria-hidden="true">&laquo;</span>
                        </button>
                 </li> `;
@@ -217,7 +251,7 @@ const renderPages = (disableBtn = '') => {
 
     // next button
     pagesDiv.innerHTML += `<li class="page-item">
-                       <button class="page-link ${(disableBtn === 'next') ? 'bg-secondary' : 'cursor-pointer'}" ${(disableBtn === 'next') ? 'disabled' : ''} onclick="nextPage()" aria-label="Next">
+                       <button class="page-link ${(disableBtn === 'next' || disableBtn === 'both') ? 'bg-secondary' : 'cursor-pointer'}" ${(disableBtn === 'next' || disableBtn === 'both') ? 'disabled' : ''} onclick="nextPage()" aria-label="Next">
                          <span aria-hidden="true">&raquo;</span>
                        </button>
                      </li> `;
@@ -272,6 +306,7 @@ const buttonToDisable = () => {
 }
 
 const changePage = (page) => {
+    console.log("columns page", columns);
     console.log("pagepage", page);
     if (page === currentPage) {
         return;
@@ -324,6 +359,8 @@ const handleTableTabChange = (e) => {
     if (tabClicked === currentTab) {
         return;
     }
+    currentPage = 1;
+    start = 1;
     currentTab = tabClicked;
     // console.log("tabClicked", tabClicked);
     const tabIndex = TABS.indexOf(tabClicked); // index, -1;
@@ -363,12 +400,14 @@ const toggleColumnVisibility = (columnIndex) => {
     
     for (let i = 0; i < rows.length; i++) {
         const cell = rows[i].cells[columnIndex];
-        if (columns[columnIndex].isHidden) {
+        if (columns[columnIndex].isHidden) {  
             cell.style.display = 'none';
         } else {
             cell.style.display = '';
         }
     }
+
+    console.log("Columns 2", columns);
 };
 
 const renderToggleButtons = () => {
@@ -421,15 +460,29 @@ const showAllColumns = () => {
     });
 };
 
-const Download = () => {
+const Download = async (method = '') => {
     // add logic to show only the isHidden = false columns
-        const titleKeys = columns.map((column) => column.label).filter((column) => column !== 'Action')
+        const titleKeys = columns.filter(column => !column.isHidden).map((column) => column.label).filter((column) => column !== 'Action');
+        const columnKeys = columns.filter(column => !column.isHidden).map((column) => column.key).filter((column) => column !== 'action');
+
         const refinedData = [];
         refinedData.push(titleKeys);
-        data.forEach(item => {
-            const itemValues = Object.values(item).map(value => {
-                return `"${value}"`;
-            });
+        const tempLimit = pageLimit;
+        let tempData = data;
+        if (method === 'All') {
+            pageLimit = 99999;
+            const response = await getApiData();
+            pageLimit = tempLimit;
+            tempData = response.data.data;
+        }
+        tempData.forEach(item => {
+            const itemValues = Object.entries(item).map(([key, value]) => {
+                if (columnKeys.includes(key)) {
+                    return `"${value}"`;
+                } else {
+                    return '';
+                }
+            }).filter(value => value !== '');
             refinedData.push(itemValues);  
         });
     
@@ -445,8 +498,192 @@ const Download = () => {
         link.href = objUrl;
         link.download = "data.csv";
         link.click();
-    };
+};
 
+const adjustPages = (response) => {
+    totalRecords = response.data.meta.totalRecords; 
+    totalPages = Math.ceil(response.data.meta.totalRecords / pageLimit);
+    console.log("totalPages", totalPages);
+    // const pagesToRender = Math.ceil(totalRecords / pageLimit);
+    if (start === 1) {
+        if (totalPages>=5) {
+            end = 5;
+        } else {
+            end = totalPages;
+        }
+    } else {
+        if (totalPages > 5) {
+            end = start + 4;
+        } else {
+            end = totalPages;
+        }
+    }
+    renderPages();
+    if (start === 1 && end < 5) {
+        renderPages('both');
+        return;
+    } 
+    if (start === 1) {
+        renderPages('previous');
+    }
+    if (end < 5) {
+        renderPages('next');
+    }
+};
+
+const adjustColumns = () => {
+    columns.forEach((column, index) => {
+        if (column.isHidden) {
+            const key = column.key;
+            const dataToHide = document.querySelectorAll(`td[data-attr="${key}"]`);
+
+            dataToHide.forEach((data) => {
+                data.style.display = 'none';
+            });
+        }
+    });
+}
+
+
+const initTable = () => {
+    const dataTableContainer = document.getElementById('data-table-container');
+    console.log("datatable", dataTableContainer);
+    dataTableContainer.innerHTML = "";
+    dataTableContainer.innerHTML = `
+     <div id="dataTable">
+              <div class="card data-table-custom p-3" id="tabledata">
+                <!-- upper div -->
+                <div class="d-flex justify-content-between border-bottom">
+                  <!-- this is left tab div -->
+                  <div id="table-tab-box">
+                  </div>
+
+                  <!-- This is right filter div -->
+                  <div class="dropdown show">
+                    <button class="btn btn-primary" id="filterByDropdown" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">Filter By <i class="fa fa-arrow-down mx-1" style="font-size: 13px;"
+                        aria-hidden="true"></i> </button>
+                    <div class="custom-dropdown rounded mt-1" id="custom-dropdown" aria-labelledby="filterByDropdown">
+                      <div class="p-3">
+                        <h6>Filter By</h6>
+                        <div>
+                          <input type="text" placeholder="Search" id="search-filter" class="form-control"
+                            style="padding-left: 35px;">
+                          <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                          <span>Date</span>
+                          <i class="fa fa-arrow-down cursor-pointer" data-toggle="collapse" href="#collapseExample"
+                            role="button" aria-expanded="false" aria-controls="collapseExample"></i>
+                        </div>
+                        <div class="collapse" id="collapseExample">
+                          <div class="d-flex">
+                            <div class="filter-buttons" id="filter-tab-box">
+                              <!-- <button class="btn btn-primary">Year to Date</button> -->
+                              <button class="btn btn-primary filter-tab-inactive filter-table-tab">Year to Date</button>
+                              <button class="btn btn-primary filter-tab-inactive filter-table-tab">Month to Date</button>
+                              <button class="btn btn-primary filter-tab-inactive filter-table-tab">Last 90 Days</button>
+                              <button class="btn btn-primary filter-tab-inactive filter-table-tab">Last 60 Days</button>
+                              <button class="btn btn-primary filter-tab-inactive filter-table-tab">Last 30 Days</button>
+                              <button id="date-start" class="btn btn-primary filter-tab-inactive filter-table-tab">Select Custom
+                                Range</button>
+                                <!-- <div id="date-range-picker" style="display: none;">
+                                  <input type="text" id="date-start" placeholder="Start Date">
+                                  <input type="text" id="date-end" placeholder="End Date">
+                                </div> -->
+                            </div>
+                            <div id="custom-range-div" class="d-none">
+                              <p >Start Date: <span id="start-date"></span> </p>
+                              <p>End Date: <span id="end-date"></span> </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mt-3">
+                          <button class="btn btn-block btn-primary" onclick="applyFilter()">Apply</button>
+                          <button class="btn btn-block btn-secondary" onclick="removeFilter()">Remove All</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Middle div (download, fullscreen, density, column management) -->
+                <div class="d-flex justify-content-end align-items-center my-3">
+                  <div class="dropdown show">
+                  <button class="btn btn-primary mx-3">+ Add</button>
+                    <i class="fa fa-columns cursor-pointer" id="columnsDropdownIcon" aria-hidden="true"
+                      data-toggle="tooltip" data-placement="top" title="Hide/Show Column"></i>
+                    <div class="custom-dropdown rounded mt-1" id="custom-dropdown-columns"
+                      aria-labelledby="columnsDropdownIcon">
+                      <div>
+                        <div class="d-flex justify-content-between mx-3 mb-2 py-2">
+                          <button onclick="hideAllColumns()" class="btn btn-primary" style="font-size: 14px;">HIDE
+                            ALL</button>
+                          <button onclick="showAllColumns()" class="btn btn-primary" style="font-size: 14px;">SHOW
+                            ALL</button>
+                        </div>
+                      </div>
+                      <div id="columns-visibilty-box">
+                      </div>
+                    </div>
+                  </div>
+                  <i class="fa fa-align-justify mx-3 cursor-pointer" aria-hidden="true" data-toggle="tooltip"
+                    data-placement="top" title="Density" onclick="handleDensity()"></i>
+                  <i class="fa fa-arrows-alt cursor-pointer" aria-hidden="true" data-toggle="tooltip"
+                    data-placement="top" title="Full Screen" onclick="toggleFullscreen()"></i>
+                  <div class="dropdown">
+                    <i class="fa fa-download mx-3 bg-primary p-2 rounded cursor-pointer" aria-hidden="true"
+                      data-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" data-placement="top"
+                      title="Download"></i>
+                    <div class="dropdown-menu custom-dropdown-download-menu">
+                      <a class="dropdown-item" href="#" onclick="Download()">Current</a>
+                      <a class="dropdown-item" href="#" onclick="Download('All')">All</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Table -->
+                <div class="table-responsive">
+                  <table class="table table-striped" id="data-table">
+                    <thead class="bg-secondary">
+                      <tr id="table-columns">
+                      </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+
+                  </table>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-2 ">
+                  <p class="text-center" id="page-result"></p>
+                </div>
+                <div class="col-md-8 d-flex justify-content-center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pages">
+                    </ul>
+                  </nav>
+                </div>
+                <div class="col-md-2">
+                  <div></div>
+                </div>
+              </div>
+            </div>
+    `;
+}
+
+initTable();
+document.getElementById('filterByDropdown').addEventListener('click', () => {
+    const customDropdown = document.getElementById('custom-dropdown');
+    customDropdown.classList.toggle('showDropdown');
+});
+
+document.getElementById('columnsDropdownIcon').addEventListener('click', () => {
+    const customDropdown = document.getElementById('custom-dropdown-columns');
+    customDropdown.classList.toggle('showDropdown');
+});
 
 document.getElementById('table-tab-box').addEventListener('click', (e) => {
     handleTableTabChange(e);
@@ -455,4 +692,4 @@ document.getElementById('table-tab-box').addEventListener('click', (e) => {
 
 document.getElementById('filter-tab-box').addEventListener('click', (e) => {
     handleFilterTabChange(e);
-})
+});
