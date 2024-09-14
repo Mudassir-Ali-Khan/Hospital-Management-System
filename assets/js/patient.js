@@ -11,6 +11,8 @@ let columns = [
     { label: 'Action', key: 'action', sortable: false, isHidden: false },
 ]
 
+
+
 // const data = [
     
 //     { firstname: 'User', lastname: 'User lstname', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
@@ -18,6 +20,8 @@ let columns = [
 //     { firstname: 'John', lastname: 'Doe', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
 //     { firstname: 'Rayyan', lastname: 'Irfan', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
 // ]
+
+
 
 const getData = async () => {
         try {
@@ -40,6 +44,12 @@ const getApiData = async () => {
         return error.response;
     }
 }
+
+
+
+
+
+
 
 // this will change as per data
 const renderData = () => {

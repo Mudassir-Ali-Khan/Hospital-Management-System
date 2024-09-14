@@ -155,6 +155,44 @@ const applyFilter = () => {
     getData();
 };
 
+function resetFiltersAndCollapse() {
+    const collapseElement = document.getElementById('collapseExample');
+    if (collapseElement.classList.contains('show')) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+    }
+
+    const dropdownToggle = document.getElementById('filterByDropdown');
+    if (dropdownToggle.getAttribute('aria-expanded') === 'true') {
+        dropdownToggle.click();
+    }
+
+    const filterButtons = document.querySelectorAll('.filter-table-tab');
+    filterButtons.forEach(button => {
+        button.classList.add('filter-tab-inactive');
+    });
+}
+  
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    function displayButton(text) {
+        if (text === "Add Patient") {
+            const button = document.createElement('button');
+            button.className = 'btn btn-primary mx-3';
+            button.textContent = '+ Add';
+            button.setAttribute('data-toggle', 'modal');
+            button.setAttribute('data-target', '#add-new-user-modal');
+            const parentDiv = document.querySelector('.d-flex.justify-content-end.align-items-center');
+            const dropdownDiv = parentDiv.querySelector('.dropdown.show');
+            parentDiv.insertBefore(button, dropdownDiv);
+        }
+    }
+
+    displayButton(addBtnText);
+});
+
+
 const removeFilter = () => {
     filter = {
         startDate: '',
@@ -600,7 +638,7 @@ const initTable = () => {
                         </div>
                         <div class="mt-3">
                           <button class="btn btn-block btn-primary" onclick="applyFilter()">Apply</button>
-                          <button class="btn btn-block btn-secondary" onclick="removeFilter()">Remove All</button>
+                          <button class="btn btn-block btn-secondary" onclick="resetFiltersAndCollapse(); removeFilter();">Remove All</button>
                         </div>
                       </div>
                     </div>
@@ -610,7 +648,7 @@ const initTable = () => {
                 <!-- Middle div (download, fullscreen, density, column management) -->
                 <div class="d-flex justify-content-end align-items-center my-3">
                   <div class="dropdown show">
-                  <button class="btn btn-primary mx-3">+ Add</button>
+                  
                     <i class="fa fa-columns cursor-pointer" id="columnsDropdownIcon" aria-hidden="true"
                       data-toggle="tooltip" data-placement="top" title="Hide/Show Column"></i>
                     <div class="custom-dropdown rounded mt-1" id="custom-dropdown-columns"
@@ -673,6 +711,8 @@ const initTable = () => {
             </div>
     `;
 }
+
+
 
 initTable();
 document.getElementById('filterByDropdown').addEventListener('click', () => {

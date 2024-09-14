@@ -91,6 +91,51 @@
           </div>
         </li>
 
+        <div class="modal fade" id="add-new-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
+                <button type="button" class="close" onclick="hideErrorBox()" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <div class="form-group">
+                    <label for="">First Name</label>
+                    <input type="text" class="form-control" id="doctorfirstname">
+                  </div>
+                <div class="form-group">
+                    <label for="">Last Name</label>
+                    <input type="text" class="form-control" id="doctorlastname">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="email" class="form-control" id="doctoremail" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Phone Number</label>
+                    <input type="password" class="form-control" id="doctorpassword"  autocomplete="new-password">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Gender</label>
+                    <select class="form-control" id="doctorgender">
+                        <option value="">Select a gender...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn" onclick="hideErrorBox()">Close</button>
+                <button type="button" class="btn btn-primary" id="addUserSubmitBtn" onclick="addPatient()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Messages Dropdown Menu -->
 
         <!-- Notifications Dropdown Menu -->
@@ -239,6 +284,7 @@
   <!-- REQUIRED SCRIPTS -->
   <!-- jQuery -->
   <script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Bootstrap -->
   <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- overlayScrollbars -->
