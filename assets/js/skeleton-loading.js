@@ -1,4 +1,5 @@
 const showSkeletonLoading = () => {
+    renderErrorBox(null);
     const tableBody = document.getElementById('table-body');
     tableBody.innerHTML = "";
 

@@ -1,16 +1,38 @@
 const toggleFullscreen = () => {
     const table = document.getElementById('dataTable');
+    const dataTableCustom = table.querySelector('.data-table-custom');
+    dataTableCustom.style.height = '93vh';
     const tabledata = document.getElementById('tabledata');
     // tabledata.style.height = '90vh';
+    console.log("HER HERE");
     if (!document.fullscreenElement) {
         table.requestFullscreen().catch(err => {
             alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
         });
     } else {
-        // tabledata.style.height = '0px';
+        console.log("Exit full screen");
+        dataTableCustom.style.height = '44rem';
         document.exitFullscreen();
     }
 }
+
+document.addEventListener('fullscreenchange', (e) => {
+    console.log("document.fullscreenEnabled", document.fullscreenEnabled);
+    if (!document.fullscreenElement) {
+        const table = document.getElementById('dataTable');
+        const dataTableCustom = table.querySelector('.data-table-custom');
+        dataTableCustom.style.height = '44rem';
+        // if (!document.body.classList.contains('dark-mode')) {
+        //     document.getElementById('page-result').classList.remove('text-light');
+        //     document.getElementById('page-result').classList.add('text-dark');
+        //     }
+    } else {
+        // if (!document.body.classList.contains('dark-mode')) {
+        //     document.getElementById('page-result').classList.add('text-light');
+        //     document.getElementById('page-result').classList.remove('text-dark');
+        // }
+    }
+});
 
 let density = 'py-2';
 
@@ -177,16 +199,16 @@ function resetFiltersAndCollapse() {
 document.addEventListener('DOMContentLoaded', function() {
 
     function displayButton(text) {
-        if (text === "Add Patient") {
             const button = document.createElement('button');
             button.className = 'btn btn-primary mx-3';
-            button.textContent = '+ Add';
-            button.setAttribute('data-toggle', 'modal');
-            button.setAttribute('data-target', '#add-new-user-modal');
+            button.textContent = `+ ${text}`;
+            button.id = 'add-btn';
             const parentDiv = document.querySelector('.d-flex.justify-content-end.align-items-center');
             const dropdownDiv = parentDiv.querySelector('.dropdown.show');
             parentDiv.insertBefore(button, dropdownDiv);
-        }
+            button.addEventListener('click', () => {
+                handleClickAddButton();
+            })
     }
 
     displayButton(addBtnText);
@@ -538,20 +560,36 @@ const Download = async (method = '') => {
         link.click();
 };
 
+const renderErrorBox = (totalRecords) => {
+    console.log("Total records: " + totalRecords)
+    if (totalRecords === 0) {
+        const errorBox = document.getElementById('error-box');
+        errorBox.innerHTML = '<p class="text-center mt-5"><em> No Result found</em></p>';
+    } else {
+        const errorBox = document.getElementById('error-box');
+        errorBox.innerHTML = '';
+    }
+}
+
 const adjustPages = (response) => {
     totalRecords = response.data.meta.totalRecords; 
     totalPages = Math.ceil(response.data.meta.totalRecords / pageLimit);
     console.log("totalPages", totalPages);
     // const pagesToRender = Math.ceil(totalRecords / pageLimit);
+    renderErrorBox(totalRecords);
     if (start === 1) {
-        if (totalPages>=5) {
+        if (totalPages>5) {
             end = 5;
         } else {
             end = totalPages;
         }
+        if (totalPages === 5) {
+            renderPages('both');
+            return;
+        }
     } else {
         if (totalPages > 5) {
-            end = start + 4;
+            end = start + ((totalPages - start) >= 5 ? 4 : (totalPages - start));
         } else {
             end = totalPages;
         }
@@ -567,7 +605,13 @@ const adjustPages = (response) => {
     if (end < 5) {
         renderPages('next');
     }
+
+    if (totalPages === end) {
+        renderPages('next');
+    }
+    
 };
+
 
 const adjustColumns = () => {
     columns.forEach((column, index) => {
@@ -581,6 +625,15 @@ const adjustColumns = () => {
         }
     });
 }
+
+const changeLimit = () => {
+    pageLimit = document.getElementById('limit-select').value;
+    currentPage = 1;
+    start = 1;
+    end =5;
+    getData();
+
+};
 
 
 const initTable = () => {
@@ -691,7 +744,10 @@ const initTable = () => {
                     </tbody>
 
                   </table>
-                </div>
+                  </div>
+                  <div id="error-box">
+                  
+                  </div>
 
               </div>
               <div class="row">
@@ -705,14 +761,19 @@ const initTable = () => {
                   </nav>
                 </div>
                 <div class="col-md-2">
-                  <div></div>
+                  <div class="d-flex justify-content-end">
+                    <select class="form-control form-control-sm" id="limit-select" style="width: 100px;" onchange="changeLimit()">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
     `;
 }
-
-
 
 initTable();
 document.getElementById('filterByDropdown').addEventListener('click', () => {

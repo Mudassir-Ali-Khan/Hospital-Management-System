@@ -80,6 +80,13 @@ body {
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
+
+
+:fullscreen, ::backdrop {
+  background-color: #454D55;
+  z-index: -1;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
@@ -5980,7 +5987,6 @@ a.disabled.mailbox-attachment-close {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1040;
   width: 100vw;
   height: 100vh;
   background-color: #000;

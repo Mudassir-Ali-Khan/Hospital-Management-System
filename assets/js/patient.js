@@ -45,12 +45,6 @@ const getApiData = async () => {
     }
 }
 
-
-
-
-
-
-
 // this will change as per data
 const renderData = () => {
     const tableBody = document.getElementById('table-body');
@@ -86,7 +80,16 @@ const renderData = () => {
 const handleClickAddButton = () => {
     // this function will be called when clicked on the add button
     console.log("Clicked add button");
+    const addBtn = document.getElementById('add-btn');
+    addBtn.setAttribute('data-toggle', 'modal');
+    addBtn.setAttribute('data-target', '#add-new-user-modal');
 };
+
+const handleSubmit = () => {
+    console.log("Handle Submit");
+
+    // if resp.status === 200 close the modal and call the function getData();
+}
 
 // this won't be change
 const init = () => {

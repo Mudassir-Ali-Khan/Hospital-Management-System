@@ -91,51 +91,6 @@
           </div>
         </li>
 
-        <div class="modal fade" id="add-new-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
-                <button type="button" class="close" onclick="hideErrorBox()" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form action="">
-                  <div class="form-group">
-                    <label for="">First Name</label>
-                    <input type="text" class="form-control" id="doctorfirstname">
-                  </div>
-                <div class="form-group">
-                    <label for="">Last Name</label>
-                    <input type="text" class="form-control" id="doctorlastname">
-                  </div>
-                  <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="email" class="form-control" id="doctoremail" autocomplete="off">
-                  </div>
-                  <div class="form-group">
-                    <label for="">Phone Number</label>
-                    <input type="password" class="form-control" id="doctorpassword"  autocomplete="new-password">
-                  </div>
-                  <div class="form-group">
-                    <label for="">Gender</label>
-                    <select class="form-control" id="doctorgender">
-                        <option value="">Select a gender...</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn" onclick="hideErrorBox()">Close</button>
-                <button type="button" class="btn btn-primary" id="addUserSubmitBtn" onclick="addPatient()">Submit</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Messages Dropdown Menu -->
 
         <!-- Notifications Dropdown Menu -->
@@ -271,6 +226,53 @@
           </div><!--/. container-fluid -->
         </section>
       </div>
+
+      <!-- Modal Add patient -->
+
+      <div class="modal fade" id="add-new-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
+              <button type="button" class="close" onclick="hideErrorBox()" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <div class="form-group">
+                  <label for="">First Name</label>
+                  <input type="text" class="form-control" id="doctorfirstname">
+                </div>
+              <div class="form-group">
+                  <label for="">Last Name</label>
+                  <input type="text" class="form-control" id="doctorlastname">
+                </div>
+                <div class="form-group">
+                  <label for="">Email</label>
+                  <input type="email" class="form-control" id="doctoremail" autocomplete="off">
+                </div>
+                <div class="form-group">
+                  <label for="">Phone Number</label>
+                  <input type="password" class="form-control" id="doctorpassword"  autocomplete="new-password">
+                </div>
+                <div class="form-group">
+                  <label for="">Gender</label>
+                  <select class="form-control" id="doctorgender">
+                      <option value="">Select a gender...</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn" onclick="hideErrorBox()">Close</button>
+              <button type="button" class="btn btn-primary" id="addUserSubmitBtn" onclick="handleSubmit()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- /.content -->
     </div>
     <!-- Control Sidebar -->
@@ -318,6 +320,15 @@
   <script src="/assets/js/patient.js"></script>
   <script src="/assets/js/calendar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <script>
+      document.addEventListener('load', function() {
+      var modals = document.querySelectorAll('.modal.fade');
+      modals.forEach(function(modal) {
+        document.body.appendChild(modal);
+      });
+    });
+  </script>
 </body>
 
 </html>
