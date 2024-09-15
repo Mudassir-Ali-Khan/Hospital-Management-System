@@ -1,6 +1,8 @@
 const TABS = ["All", "Male", "Female", "Bigender", "Polygender", "Non-binary", "Other"];
 let currentTab = "All";
 let addBtnText = "Add Patient";
+const closeBtn = document.getElementById('closeBtn');
+const errorBox = document.getElementById('error');
 
 let columns = [
     { label: 'First Name', key: 'firstname', sortable: true, isHidden: false },
@@ -85,8 +87,45 @@ const handleClickAddButton = () => {
     addBtn.setAttribute('data-target', '#add-new-user-modal');
 };
 
-const handleSubmit = () => {
+function hideErrorBox() {
+    const errorBox = document.getElementById('errorBox');
+    errorBox.classList.add('d-none');
+    errorBox.style.display = 'none';
+}
+
+const handleSubmit = async () => {
     console.log("Handle Submit");
+    const firstname =document.getElementById('patientfirstname').value;
+    const lastname = document.getElementById('patientlastname').value;
+    const email = document.getElementById('patientemail').value;
+    const password = document.getElementById('patientpassword').value;
+    const phonenumber = document.getElementById('patientnum').value;
+    const gender = document.getElementById('patientgender').value;
+
+    if (firstname === '' || lastname === '' || email === '' || password === '' || phonenumber === '' || gender === '') {
+        errorBox.innerHTML = 'All fields are required';
+        errorBox.classList.remove('d-none');
+        errorBox.style.display = 'block';
+        return;
+    }
+    
+   try {
+        const response = await axios.post(BASE_URL + `/api/patients`, {
+            firstname,
+            lastname,
+            email,
+            password,
+            phonenumber,
+            gender
+        });
+        if (response.status === 200) {
+            closeBtn.click();
+            getData();
+            window.location.reload();
+        }
+    } catch (error) {
+        return error.response;
+    }
 
     // if resp.status === 200 close the modal and call the function getData();
 }

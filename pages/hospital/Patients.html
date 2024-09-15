@@ -240,25 +240,32 @@
             </div>
             <div class="modal-body">
               <form action="">
+                <div class="alert alert-danger" role="alert" id="errorBox">
+                 
+                </div>
                 <div class="form-group">
                   <label for="">First Name</label>
-                  <input type="text" class="form-control" id="doctorfirstname">
+                  <input type="text" class="form-control" id="patientfirstname">
                 </div>
               <div class="form-group">
                   <label for="">Last Name</label>
-                  <input type="text" class="form-control" id="doctorlastname">
+                  <input type="text" class="form-control" id="patientlastname">
                 </div>
                 <div class="form-group">
                   <label for="">Email</label>
-                  <input type="email" class="form-control" id="doctoremail" autocomplete="off">
+                  <input type="email" class="form-control" id="patientemail" autocomplete="off">
+                </div>
+                <div class="form-group">
+                  <label for="">Password</label>
+                  <input type="password" class="form-control" id="patientpassword"  autocomplete="new-password">
                 </div>
                 <div class="form-group">
                   <label for="">Phone Number</label>
-                  <input type="password" class="form-control" id="doctorpassword"  autocomplete="new-password">
+                  <input type="number" class="form-control" id="patientnum"  autocomplete="off">
                 </div>
                 <div class="form-group">
                   <label for="">Gender</label>
-                  <select class="form-control" id="doctorgender">
+                  <select class="form-control" id="patientgender">
                       <option value="">Select a gender...</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
