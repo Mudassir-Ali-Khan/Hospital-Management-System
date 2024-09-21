@@ -87,12 +87,6 @@ const handleClickAddButton = () => {
     addBtn.setAttribute('data-target', '#add-new-user-modal');
 };
 
-function hideErrorBox() {
-    const errorBox = document.getElementById('errorBox');
-    errorBox.classList.add('d-none');
-    errorBox.style.display = 'none';
-}
-
 const handleSubmit = async () => {
     console.log("Handle Submit");
     const firstname =document.getElementById('patientfirstname').value;
