@@ -113,6 +113,12 @@ const handleSubmit = async () => {
             gender
         });
         if (response.status === 200) {
+            document.getElementById('patientfirstname').value = '';
+            document.getElementById('patientlastname').value = '';
+            document.getElementById('patientemail').value = '';
+            document.getElementById('patientpassword').value = '';
+            document.getElementById('patientnum').value = '';
+            document.getElementById('patientgender').value = '';
             closeBtn.click();
             getData();
             window.location.reload();
