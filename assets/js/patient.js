@@ -11,19 +11,7 @@ let columns = [
     { label: 'Phone Number', key: 'phonenumber', sortable: false, isHidden: false  },
     { label: 'Gender', key: 'gender', sortable: false, isHidden: false },
     { label: 'Action', key: 'action', sortable: false, isHidden: false },
-]
-
-
-
-// const data = [
-    
-//     { firstname: 'User', lastname: 'User lstname', email: 'rayyan2@gmail.com', phonenumber: '123123123', gender: 'male' },
-//     { firstname: 'Mudassir', lastname: 'Mouazam', email: 'rayyan3@gmail.com', phonenumber: '123123123', gender: 'male' },
-//     { firstname: 'John', lastname: 'Doe', email: 'rayyan4@gmail.com', phonenumber: '123123123', gender: 'male' },
-//     { firstname: 'Rayyan', lastname: 'Irfan', email: 'rayyan5@gmail.com', phonenumber: '123123123', gender: 'male' },
-// ]
-
-
+];
 
 const getData = async () => {
         try {
@@ -87,6 +75,15 @@ const handleClickAddButton = () => {
     addBtn.setAttribute('data-target', '#add-new-user-modal');
 };
 
+const clearAddForm = () => {
+    document.getElementById('patientfirstname').value = '';
+    document.getElementById('patientlastname').value = '';
+    document.getElementById('patientemail').value = '';
+    document.getElementById('patientpassword').value = '';
+    document.getElementById('patientnum').value = '';
+    document.getElementById('patientgender').value = '';
+};
+
 const handleSubmit = async () => {
     console.log("Handle Submit");
     const firstname =document.getElementById('patientfirstname').value;
@@ -97,9 +94,12 @@ const handleSubmit = async () => {
     const gender = document.getElementById('patientgender').value;
 
     if (firstname === '' || lastname === '' || email === '' || password === '' || phonenumber === '' || gender === '') {
-        errorBox.innerHTML = 'All fields are required';
-        errorBox.classList.remove('d-none');
-        errorBox.style.display = 'block';
+        Swal.fire({
+            title: 'Error!',
+            text: 'Please fill all the fields',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });    
         return;
     }
     
@@ -112,19 +112,18 @@ const handleSubmit = async () => {
             phonenumber,
             gender
         });
-        if (response.status === 200) {
-            document.getElementById('patientfirstname').value = '';
-            document.getElementById('patientlastname').value = '';
-            document.getElementById('patientemail').value = '';
-            document.getElementById('patientpassword').value = '';
-            document.getElementById('patientnum').value = '';
-            document.getElementById('patientgender').value = '';
+        if (response.status === 201 || response.status === 200) {
+            clearAddForm();
             closeBtn.click();
             getData();
-            window.location.reload();
         }
     } catch (error) {
-        return error.response;
+        Swal.fire({
+            title: 'Error!',
+            text: error.response.data.message,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });   
     }
 
     // if resp.status === 200 close the modal and call the function getData();

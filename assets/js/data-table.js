@@ -528,11 +528,14 @@ const Download = async (method = '') => {
         const refinedData = [];
         refinedData.push(titleKeys);
         const tempLimit = pageLimit;
+        const tempPageNumber = currentPage;
         let tempData = data;
         if (method === 'All') {
             pageLimit = 99999;
+            currentPage = 1;
             const response = await getApiData();
             pageLimit = tempLimit;
+            currentPage = tempPageNumber;
             tempData = response.data.data;
         }
         tempData.forEach(item => {
