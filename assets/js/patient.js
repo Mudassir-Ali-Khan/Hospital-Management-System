@@ -55,7 +55,7 @@ const renderData = () => {
                     aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
                     <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">Edit</a>
-                    <a class="dropdown-item" href="#">Details</a>
+                    <a class="dropdown-item" href="/pages/examples/profile.html">Details</a>
                     </div>
                 </div>
             </td>` : '' }

@@ -43,6 +43,18 @@ const pages = [
     url: "/pages/hospital/Patients.html",
     name: "Patients",
   },
+  {
+    url: "/pages/hospital/Appointments.html",
+    name: "Appointments",
+  },
+  {
+    url: "/pages/hospital/Settings.html",
+    name: "Settings",
+  },
+  {
+    url: "/pages/hospital/Logout.html",
+    name: "Logout",
+  },
 ];
 
 const changeActiveSidebarMenu = () => {
@@ -166,6 +178,41 @@ const initSidebar = () => {
     changeActiveSidebarMenu();
   }
 };
+
+const initnavBar = () => {
+  const customNavBar = document.getElementById("custom-top-bar")
+  if (customNavBar) {
+    customNavBar.innerHTML = "";
+    customNavBar.innerHTML = `
+            <nav class="main-header navbar navbar-expand navbar-dark">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <label class="ui-switch mt-2">
+            <input type="checkbox" id="theme-toggle" onchange="themCheckboxMethod()" checked>
+            <div class="slider">
+              <div class="circle"></div>
+            </div>
+          </label>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    `
+  }
+}
+
+initnavBar();
 
 loadTheme();
 initSidebar();
