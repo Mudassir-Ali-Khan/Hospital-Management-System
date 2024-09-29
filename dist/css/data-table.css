@@ -111,3 +111,13 @@
 .dark-mode .filter-tab {
     color: white !important;
 }
+
+@media screen and (max-width: 767px) {
+    #table-tab-box {
+        overflow-x: scroll;
+    }
+
+    #table-tab-box::-webkit-scrollbar {
+        display: none;
+    }
+} 

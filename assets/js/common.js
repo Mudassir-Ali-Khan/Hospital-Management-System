@@ -1,5 +1,18 @@
 const themCheckboxMethod = () => {
   document.body.classList.toggle("dark-mode");
+  const topBar = document.querySelector("#custom-top-bar nav");
+  const sidebar = document.querySelector("#custom-sidebar aside");
+  if (document.body.className.includes("dark-mode")) {
+    topBar.classList.remove("navbar-light");
+    topBar.classList.add("navbar-dark");
+    sidebar.classList.add("sidebar-dark-primary");
+    sidebar.classList.remove("sidebar-light-primary");
+  } else {
+    topBar.classList.remove("navbar-dark");
+    topBar.classList.add("navbar-light");
+    sidebar.classList.remove("sidebar-dark-primary");
+    sidebar.classList.add("sidebar-light-primary");
+  }
   localStorage.setItem(
     "theme",
     document.body.className.includes("dark-mode") ? "dark" : "light"
@@ -9,13 +22,23 @@ const themCheckboxMethod = () => {
 const loadTheme = () => {
   const theme = localStorage.getItem("theme");
   const themeToggle = document.getElementById("theme-toggle");
+  const topBar = document.querySelector("#custom-top-bar nav");
+  const sidebar = document.querySelector("#custom-sidebar aside");
 
   if (theme === "light") {
     themeToggle.removeAttribute("checked");
     document.body.classList.remove("dark-mode");
+    topBar.classList.remove("navbar-dark");
+    topBar.classList.add("navbar-light");
+    sidebar.classList.remove("sidebar-dark-primary");
+    sidebar.classList.add("sidebar-light-primary");
   } else {
     themeToggle.setAttribute("checked", "true");
     document.body.classList.add("dark-mode");
+    topBar.classList.remove("navbar-light");
+    topBar.classList.add("navbar-dark");
+    sidebar.classList.add("sidebar-dark-primary");
+    sidebar.classList.remove("sidebar-light-primary");
   }
 };
 
@@ -44,6 +67,11 @@ const pages = [
     name: "Patients",
   },
   {
+    url: "/pages/hospital/PatientsProfile.html",
+    name: "Patients",
+    isShow: false
+  },
+  {
     url: "/pages/hospital/Appointments.html",
     name: "Appointments",
   },
@@ -69,7 +97,7 @@ const changeActiveSidebarMenu = () => {
     );
   });
 
-  if (currentPage.isNavGroup) {
+  if (currentPage && currentPage.isNavGroup) {
     currentPage = {
       ...currentPage.navItems.find((navItem) =>
         currentUrl.includes(navItem.url)
@@ -81,12 +109,13 @@ const changeActiveSidebarMenu = () => {
   const navItems = document.querySelectorAll("#nav-items .nav-item");
 
   navItems.forEach((liElement) => {
-    const liAElement = liElement.querySelector("a");
-    const liAElementHref = liAElement.getAttribute("href");
+    const AElement = liElement.querySelector("a");
+    const liPElement = liElement.querySelector("a p");
 
-    if (liAElementHref.includes(currentPage.url)) {
-      liAElement.classList.add("active");
-      liAElement.setAttribute("href", "#");
+    console.log("liAElement.innerHTML", liPElement.textContent.trim());
+    if (liPElement.textContent.trim().includes(currentPage.name)) {
+      AElement.classList.add("active");
+      AElement.setAttribute("href", "#");
       if (currentPage.isNavGroup) {
         const navTreeView = document.getElementById("nav-treeview");
         navTreeView.style.display = "block";
@@ -132,13 +161,15 @@ const addNavItems = () => {
         </li>
             `;
     } else {
-      navItems.innerHTML += `
-                  <li class="nav-item">
-                    <a href="${page.url}" class="nav-link">
-                      <p>${page.name}</p>
-                    </a>
-         </li>
-                  `;
+      if (page.isShow !== false) {
+        navItems.innerHTML += `
+                    <li class="nav-item">
+                      <a href="${page.url}" class="nav-link">
+                        <p>${page.name}</p>
+                      </a>
+           </li>
+                    `;
+      }
     }
   });
 };
@@ -213,6 +244,5 @@ const initnavBar = () => {
 }
 
 initnavBar();
-
-loadTheme();
 initSidebar();
+loadTheme();

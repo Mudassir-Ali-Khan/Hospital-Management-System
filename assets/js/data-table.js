@@ -649,7 +649,7 @@ const initTable = () => {
                 <!-- upper div -->
                 <div class="d-flex justify-content-between border-bottom">
                   <!-- this is left tab div -->
-                  <div id="table-tab-box">
+                  <div id="table-tab-box" style="display:flex;">
                   </div>
 
                   <!-- This is right filter div -->
