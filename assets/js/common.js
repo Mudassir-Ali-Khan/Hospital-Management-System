@@ -1,3 +1,18 @@
+const getAuthUser = () => {
+  const authUser = localStorage.getItem('authUser'); // data // null
+  if (authUser !== null) {
+    return JSON.parse(authUser);
+  }
+  return null;
+};
+
+const authUser = getAuthUser();
+const isAdmin = authUser?.user?.isAdmin;
+
+console.log(
+  authUser, "authUser"
+)
+
 const themCheckboxMethod = () => {
   document.body.classList.toggle("dark-mode");
   const topBar = document.querySelector("#custom-top-bar nav");
@@ -59,17 +74,20 @@ const pages = [
       {
         url: "/pages/hospital/Receptionist.html",
         name: "Receptionist",
+        isAdminPage: true,
       },
     ],
   },
   {
     url: "/pages/hospital/Patients.html",
     name: "Patients",
+    isAdminPage: true,
   },
   {
     url: "/pages/hospital/PatientsProfile.html",
     name: "Patients",
-    isShow: false
+    isShow: false,
+    isAdminPage: true,
   },
   {
     url: "/pages/hospital/Appointments.html",
@@ -80,7 +98,7 @@ const pages = [
     name: "Settings",
   },
   {
-    url: "/pages/hospital/Logout.html",
+    url: "#",
     name: "Logout",
   },
 ];
@@ -129,6 +147,9 @@ const changeActiveSidebarMenu = () => {
 const addNestedNavItems = (page) => {
   const navItems = page.navItems
     .map((navItem) => {
+      if (navItem.isAdminPage && !isAdmin) {
+        return "";
+      }
       return `
           <li class="nav-item">
                     <a href="${navItem.url}" class="nav-link">
@@ -146,29 +167,42 @@ const addNavItems = () => {
   const navItems = document.querySelector("#nav-items");
 
   pages.forEach((page) => {
-    if (page.isNavGroup) {
-      navItems.innerHTML += `
-                 <li class="nav-item">
-                <a href="${page.url}" class="nav-link">
-                  <p>
-                    ${page.name}
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview" id="nav-treeview">
-                 ${addNestedNavItems(page)}
-                </ul>
-        </li>
-            `;
-    } else {
-      if (page.isShow !== false) {
-        navItems.innerHTML += `
-                    <li class="nav-item">
-                      <a href="${page.url}" class="nav-link">
+    if (page.isAdminPage && !isAdmin) {
+      return;
+    }
+    if (page.name === 'Logout') {
+      navItems.innerHTML+= `
+         <li class="nav-item">
+                      <a href="${page.url}" class="nav-link" onclick="logout()">
                         <p>${page.name}</p>
                       </a>
            </li>
-                    `;
+      `
+    } else {
+      if (page.isNavGroup) {
+        navItems.innerHTML += `
+                   <li class="nav-item">
+                  <a href="${page.url}" class="nav-link">
+                    <p>
+                      ${page.name}
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" id="nav-treeview">
+                   ${addNestedNavItems(page)}
+                  </ul>
+          </li>
+              `;
+      } else {
+        if (page.isShow !== false) {
+          navItems.innerHTML += `
+                      <li class="nav-item">
+                        <a href="${page.url}" class="nav-link">
+                          <p>${page.name}</p>
+                        </a>
+             </li>
+                      `;
+        }
       }
     }
   });
