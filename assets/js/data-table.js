@@ -269,7 +269,6 @@ const renderColumns = () => {
     const tableColumns = document.getElementById('table-columns');
     tableColumns.innerHTML = "";
 
-    console.log("here here");
 
     // column.key === sortColumn , sortOrder == 'asc' ==> fa-sort-up otherwise fa-sort-down ==> if only sortable is true then show fa-sort
 
