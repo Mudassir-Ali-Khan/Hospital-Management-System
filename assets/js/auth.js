@@ -14,5 +14,6 @@ const checkForLogin = () => {
 checkForLogin();
 
 const logout = () => {
-    localStorage.clear()
+    localStorage.removeItem('authUser');
+    window.location.href = '/index.html';
 }

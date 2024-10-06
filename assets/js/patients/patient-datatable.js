@@ -129,8 +129,13 @@ const handleSubmit = async () => {
     // if resp.status === 200 close the modal and call the function getData();
 }
 
+const checkForAdmin = () => {
+    // grab the authUser from locatstorage and check if it's an admin then show the table otherwise logout the user
+}
+
 // this won't be change
 const init = () => {
+    checkForAdmin();
     renderColumns();
 
     // showSkeletonLoading();
@@ -139,6 +144,6 @@ const init = () => {
     renderToggleButtons();
 
     getData();
-}
+};
 
 init();
