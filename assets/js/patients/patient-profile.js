@@ -39,4 +39,48 @@ const getPatientDetails = async () => {
     }
 }
 
+const patientUpdate = async () => {
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const patientId = searchParams.get('id');
+
+    if (patientId) {
+        try {
+            const firstname =document.getElementById('firstNameUpdate').value;
+            const lastname = document.getElementById('lastNameUpdate').value;
+            const email = document.getElementById('emailUpdate').value;
+            const phonenumber = document.getElementById('phoneNumberUpdate').value;
+            const gender = document.getElementById('genderUpdate').value;
+
+            if (firstname === '' || lastname === '' || email === '' || password === '' || phonenumber === '' || gender === '') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please fill all the fields',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                  });    
+                return;
+            }
+
+             const response = await axios.patch(BASE_URL + `/api/patients/${patientId}`, {
+                 firstname,
+                 lastname,
+                 email,
+                 phonenumber,
+                 gender
+             });
+             if (response.status === 201 || response.status === 200) {
+                 getData();
+             }
+         }catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: error.response.data.message,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              });   
+        } } }
+
+ 
+
 getPatientDetails();

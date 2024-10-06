@@ -85,7 +85,6 @@ const clearAddForm = () => {
 };
 
 const handleSubmit = async () => {
-    console.log("Handle Submit");
     const firstname =document.getElementById('patientfirstname').value;
     const lastname = document.getElementById('patientlastname').value;
     const email = document.getElementById('patientemail').value;
@@ -129,8 +128,9 @@ const handleSubmit = async () => {
     // if resp.status === 200 close the modal and call the function getData();
 }
 
-const checkForAdmin = () => {
+const checkForAdmin = async () => {
     // grab the authUser from locatstorage and check if it's an admin then show the table otherwise logout the user
+
 }
 
 // this won't be change
