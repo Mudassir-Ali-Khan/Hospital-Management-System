@@ -130,8 +130,14 @@ const handleSubmit = async () => {
 
 const checkForAdmin = async () => {
     // grab the authUser from locatstorage and check if it's an admin then show the table otherwise logout the user
-
-}
+    const authUser = JSON.parse(localStorage.getItem('authUser'));
+    if (authUser && authUser.user && authUser.user.isAdmin) {
+        document.getElementById('data-table-container').style.display = 'block';
+    } else {
+        localStorage.removeItem('authUser');
+        window.location.href = '/pages/hospital/login.html';
+    }
+ }
 
 // this won't be change
 const init = () => {
