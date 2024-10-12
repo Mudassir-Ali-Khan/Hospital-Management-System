@@ -1,6 +1,6 @@
 const TABS = ["All", "Male", "Female", "Bigender", "Polygender", "Non-binary", "Other"];
 let currentTab = "All";
-let addBtnText = "Add Patient";
+let addBtnText = "Add Doctor";
 const closeBtn = document.getElementById('closeBtn');
 const errorBox = document.getElementById('error');
 
@@ -8,6 +8,8 @@ let columns = [
     { label: 'First Name', key: 'firstname', sortable: true, isHidden: false },
     { label: 'Last Name', key: 'lastname', sortable: true, isHidden: false  },
     { label: 'Email', key: 'email', sortable: true, isHidden: false },
+    { label: 'PMC', key: 'PMC', sortable: true, isHidden: false },
+    { label: 'Qualification', key: 'qualification', sortable: true, isHidden: false },
     { label: 'Phone Number', key: 'phonenumber', sortable: false, isHidden: false  },
     { label: 'Gender', key: 'gender', sortable: false, isHidden: false },
     { label: 'Action', key: 'action', sortable: false, isHidden: false },
@@ -17,18 +19,18 @@ const getData = async () => {
         try {
             showSkeletonLoading();
             const response = await getApiData();
-            data = response.data.data; // data, meta, this line will change.
+            data = response.data; // data, meta, this line will change.
             renderData();
             adjustPages(response);
         } catch (error) {
-            console.error("Error fetching patients:", error);
+            console.error("Error fetching doctors:", error);
         }
 };
 
 const getApiData = async () => {
     try {
         const dateFilter = useDateFilter();
-        const response = await axios.get(BASE_URL + `/api/patients?page=${currentPage}&limit=${pageLimit}&status=${genderTab}&search=${filter.search}&dateFilter=${dateFilter}`);
+        const response = await axios.get(BASE_URL + `/api/doctors?page=${currentPage}&limit=${pageLimit}&status=${genderTab}&search=${filter.search}&dateFilter=${dateFilter}`);
         return response;
     } catch (error) {
         return error.response;
@@ -46,6 +48,8 @@ const renderData = () => {
             <td data-attr="firstname"> <span>${element.firstname}</span>  </td>
             <td data-attr="lastname"> <span>${element.lastname}</span>   </td>
             <td data-attr="email"> <span>${element.email}</span>  </td>
+            <td data-attr="pmc"> <span>${element.PMC}</span>  </td>
+            <td data-attr="qualification"> <span>${element.qualification}</span>  </td>
             <td data-attr="phonenumber"> <span> ${element.phonenumber}</span>  </td>
             <td data-attr="gender"> <span>${element.gender}</span> </td>
 
@@ -54,7 +58,7 @@ const renderData = () => {
                     <i class="fa fa-ellipsis-h cursor-pointer" aria-hidden="true" data-toggle="dropdown"
                     aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Action"></i>
                     <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/pages/hospital/PatientsProfile.html?id=${element._id}">Details</a>
+                    <a class="dropdown-item" href="/pages/hospital/DoctorsProfile.html?id=${element._id}">Details</a>
                     </div>
                 </div>
             </td>` : '' }
@@ -75,23 +79,27 @@ const handleClickAddButton = () => {
 };
 
 const clearAddForm = () => {
-    document.getElementById('patientfirstname').value = '';
-    document.getElementById('patientlastname').value = '';
-    document.getElementById('patientemail').value = '';
-    document.getElementById('patientpassword').value = '';
-    document.getElementById('patientnum').value = '';
-    document.getElementById('patientgender').value = '';
+    document.getElementById('doctorfirstname').value = '';
+    document.getElementById('doctorlastname').value = '';
+    document.getElementById('doctoremail').value = '';
+    document.getElementById('doctorpassword').value = '';
+    document.getElementById('doctorpmc').value = '';
+    document.getElementById('doctorqualification').value = '';
+    document.getElementById('doctornumber').value = '';
+    document.getElementById('doctorgender').value = '';
 };
 
 const handleSubmit = async () => {
-    const firstname =document.getElementById('patientfirstname').value;
-    const lastname = document.getElementById('patientlastname').value;
-    const email = document.getElementById('patientemail').value;
-    const password = document.getElementById('patientpassword').value;
-    const phonenumber = document.getElementById('patientnum').value;
-    const gender = document.getElementById('patientgender').value;
+    const firstname = document.getElementById('doctorfirstname').value;
+    const lastname = document.getElementById('doctorlastname').value;
+    const email = document.getElementById('doctoremail').value;
+    const password = document.getElementById('doctorpassword').value;
+    const PMC = document.getElementById('doctorpmc').value;
+    const qualification = document.getElementById('doctorqualification').value;
+    const phonenumber = document.getElementById('doctornumber').value;
+    const gender = document.getElementById('doctorgender').value;
 
-    if (firstname === '' || lastname === '' || email === '' || password === '' || phonenumber === '' || gender === '') {
+    if (firstname === '' || lastname === '' || email === ''  || password === ''  || qualification === '' || PMC === '' || phonenumber === '' || gender === '') {
         Swal.fire({
             title: 'Error!',
             text: 'Please fill all the fields',
@@ -102,10 +110,12 @@ const handleSubmit = async () => {
     }
     
    try {
-        const response = await axios.post(BASE_URL + `/api/patients`, {
+        const response = await axios.post(BASE_URL + `/api/doctors`, {
             firstname,
             lastname,
             email,
+            PMC,
+            qualification,
             password,
             phonenumber,
             gender

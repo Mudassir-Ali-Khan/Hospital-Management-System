@@ -15,11 +15,13 @@ const getPatientDetails = async () => {
             const userEmail = document.getElementById('user-email');
             const userGender = document.getElementById('user-gender');
             const userPhone = document.getElementById('user-phone');
-
+            const inactiveField = document.getElementById('inactiveField');
             userName.innerHTML = `${patientData.firstname} ${patientData.lastname}`;
             userEmail.innerHTML = patientData.email;
             userGender.innerHTML = patientData.gender;
             userPhone.innerHTML = patientData.phonenumber;
+
+            inactiveField.checked = !patientData.inActive;
 
             if (patientData.gender.toLowerCase() === 'male') {
                 userProfileImage.setAttribute('src', '../../dist/img/avatar5.png');
@@ -50,12 +52,14 @@ const patientUpdate = async () => {
             const email = document.getElementById('emailUpdate').value;
             const phonenumber = document.getElementById('phoneNumberUpdate').value;
             const gender = document.getElementById('genderUpdate').value;
+            const inActive = !document.getElementById('inactiveField').checked;
              const response = await axios.patch(BASE_URL + `/api/patients/${patientId}`, {
                  firstname,
                  lastname,
                  email,
                  phonenumber,
-                 gender
+                 gender,
+                 inActive
              });
              if (response.status === 201 || response.status === 200) {
                  getData();
