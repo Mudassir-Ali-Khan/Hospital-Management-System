@@ -19,7 +19,7 @@ const getData = async () => {
         try {
             showSkeletonLoading();
             const response = await getApiData();
-            data = response.data; // data, meta, this line will change.
+            data = response.data.data; // data, meta, this line will change.
             renderData();
             adjustPages(response);
         } catch (error) {
