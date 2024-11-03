@@ -3,6 +3,7 @@ let currentTab = "All";
 let addBtnText = "Add Patient";
 const closeBtn = document.getElementById('closeBtn');
 const errorBox = document.getElementById('error');
+let csvFileName = 'Patients';
 
 let columns = [
     { label: 'First Name', key: 'firstname', sortable: true, isHidden: false },

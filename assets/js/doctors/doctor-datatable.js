@@ -3,6 +3,7 @@ let currentTab = "All";
 let addBtnText = "Add Doctor";
 const closeBtn = document.getElementById('closeBtn');
 const errorBox = document.getElementById('error');
+let csvFileName = 'Doctors';
 
 let columns = [
     { label: 'First Name', key: 'firstname', sortable: true, isHidden: false },
@@ -120,11 +121,11 @@ const handleSubmit = async () => {
             phonenumber,
             gender
         });
-        if (response.status === 201 || response.status === 200) {
-            clearAddForm();
-            closeBtn.click();
-            getData();
-        }
+        
+        getData();
+        clearAddForm();
+        closeBtn.click();
+
     } catch (error) {
         Swal.fire({
             title: 'Error!',

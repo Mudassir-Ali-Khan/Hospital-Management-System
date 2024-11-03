@@ -558,7 +558,11 @@ const Download = async (method = '') => {
     
         const link = document.createElement("a");
         link.href = objUrl;
-        link.download = "data.csv";
+        try {
+            link.download = `${csvFileName}.csv`
+        } catch (error) {
+            link.download = `data.csv`
+        }
         link.click();
 };
 
