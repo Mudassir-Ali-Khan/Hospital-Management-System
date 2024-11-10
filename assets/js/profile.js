@@ -10,7 +10,7 @@ const loadProfile = () => {
 
     const infoDiv = document.getElementsByClassName('info')[0];
 
-    infoDiv.innerHTML = `<a href="#" class="d-block">${fullName}</a>`
+    // infoDiv.innerHTML = `<a href="#" class="d-block">${fullName ? fullName : ''}</a>`
 }
 
 
